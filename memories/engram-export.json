@@ -1,0 +1,576 @@
+{
+  "version": "0.1.0",
+  "exported_at": "2026-06-25 13:58:41",
+  "sessions": [
+    {
+      "id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:37:41"
+    },
+    {
+      "id": "019eff00-d6a3-7205-bd7e-bd479f4eb29d",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": "019eff00-d6ba-7c46-be7a-1ad551d0dbd9",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": "019eff00-d6ae-7579-b138-939f63dcfb37",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": "019eff00-d6c2-73b4-a3a7-6876a7386e73",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": "019eff02-7e85-7fa3-a994-672c7c257666",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:40:14"
+    },
+    {
+      "id": "019eff03-12ec-746c-9e48-5a315de4078f",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:40:52"
+    },
+    {
+      "id": "019eff03-18f6-7457-bbb0-d071094f83ad",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:40:53"
+    },
+    {
+      "id": "019eff0c-a485-7cfd-bdb2-d36a237bea84",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:51:19"
+    },
+    {
+      "id": "019eff0c-a49d-7151-843b-c86eeade8218",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:51:19"
+    },
+    {
+      "id": "019eff0c-a4a8-7236-9b06-7157086df509",
+      "project": "simapro",
+      "directory": "/var/www/lk.pjdigital.top",
+      "started_at": "2026-06-25 13:51:19"
+    }
+  ],
+  "observations": [
+    {
+      "id": 1,
+      "sync_id": "obs-b542fc30d4ab68c5",
+      "session_id": "019eff00-d6c2-73b4-a3a7-6876a7386e73",
+      "type": "architecture",
+      "title": "Auth system architecture of LK UKMs PHP app",
+      "content": "**What**: Complete authentication and authorization system mapped for the LK UKMs PHP application at /var/www/lk.pjdigital.top\n\n**Why**: Need full understanding of auth flows for security review and development\n\n**Where**: \n- `/includes/security.php` — CSRF, password hashing, rate limiting, CORS, `requireRole()`, `redirectUnlessPageRole()`\n- `/includes/functions.php` — `isLoggedIn()`, `getCurrentUser()`, `requireLogin()`, `normalizeApprover()`, `recordLoginAudit()`\n- `/api/auth.php` — Login/logout/session-check/CSRF-token API endpoints\n- `/pages/login.php` — Server-rendered login form with identical logic\n- `/config/database.php` — Session configuration (8-hour lifetime, httponly, SameSite=Lax)\n- `/index.php` — Router with page-level role guards\n- `/api/bootstrap.php` — Blocks direct .php access to API files\n- `/api/users.php` — User CRUD with role validation, password change\n- `/api/proposal.php` — Data-scoped access per role\n- `/templates/sidebar.php` — Role-based menu visibility\n- `/templates/header.php` — CSRF token injected into JS\n- `/templates/footer.php` — Client-side logout handler\n\n**Learned**:\n- 6 roles: Super Admin, Admin, User, Approver, Disposisi, Read Only\n- Session-based auth only (no OAuth, JWT, or token-based API auth)\n- Dual login paths: API (`/api/auth` POST) and server-rendered (`/login` POST)\n- Legacy plaintext password support with automatic bcrypt upgrade\n- Rate limiting: 5 attempts per 15 min per IP+username\n- CSRF tokens: session-stored, generated via `bin2hex(random_bytes(32))`\n- `session_regenerate_id(true)` on login/logout to prevent session fixation\n- Session cookie: httponly, SameSite=Lax, secure flag when HTTPS\n- Data scoping in proposals: User sees own, Approver sees chain, Admin sees chain+own, Super Admin/Read Only see all\n- Page routing in index.php has role guards that redirect restricted roles\n- `requireRole()` returns 403 JSON; `redirectUnlessPageRole()` returns 302 redirect\n- Login audit log tracks all auth events (success, failed, rejected, logout)",
+      "project": "simapro",
+      "scope": "project",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:39:55",
+      "created_at": "2026-06-25 13:39:55",
+      "updated_at": "2026-06-25 13:39:55"
+    },
+    {
+      "id": 2,
+      "sync_id": "obs-d9e940321ac3c0b3",
+      "session_id": "019eff03-18f6-7457-bbb0-d071094f83ad",
+      "type": "discovery",
+      "title": "LK UKMs codebase documentation exploration complete",
+      "content": "**What**: Exhaustive read of all 80+ documentation files in the LK UKMs codebase\n**Why**: Research task to understand the full documentation landscape of the project\n**Where**: /var/www/lk.pjdigital.top — root .md files, .ai-team/wiki/, .ai-team/rules/, .ai-team/output/, docs/, .pi/agents/, autopost/skill-docs/\n**Learned**: \n- LK UKMs is a native PHP application (no framework) for managing proposals, LPJ, surat, disposisi, approval workflows for student organizations at UNISBANK Semarang\n- 12 database tables, 6 roles (Super Admin, Admin, User, Approver, Disposisi, Read Only)\n- AI team structure with roles: orchestrator, analyst, developer, designer, QA, docs\n- Wiki-first documentation approach in .ai-team/wiki/ with 12 structured files\n- Multiple tasklists completed: security (P0-P3), dashboard improvement, proposal UI/UX, KIPK cleanup\n- PWA mobile refactoring in progress (User sprints U1-U6 complete, Super Admin SA1-SA8 planned)\n- Slack-Pi bridge integration planned\n- Autopost module (standalone) for social media posting via Repliz API\n- Engram README.md is NOT the project README — it's from the Engram persistent memory tool\n- CHANGELOG.md is also for Engram, not LK UKMs",
+      "project": "simapro",
+      "scope": "project",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:42:07",
+      "created_at": "2026-06-25 13:42:07",
+      "updated_at": "2026-06-25 13:42:07"
+    },
+    {
+      "id": 3,
+      "sync_id": "obs-bb1a7af9c3bf8b00",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Complete API Endpoint Map (10 endpoints)",
+      "content": "**What**: All 10 API endpoints with their actions, methods, roles, and parameters.\n\n**Where**: `api/*.php` files, routed via `index.php`. All require `requireLogin()` except auth endpoints. All POST write actions require CSRF validation.\n\n**Routing**: `index.php` maps URI prefixes (e.g., `/api/auth` -\u003e `api/auth.php`). `api/bootstrap.php` blocks direct `.php` access in URLs.\n\n**1. /api/auth** (auth.php) - No auth required:\n- POST login: username, password + CSRF. Rate limited (5/15min). Login audit.\n- POST logout: CSRF. Destroys session.\n- POST checkSession: Returns current session status.\n- POST getCsrfToken: Returns new CSRF token.\n\n**2. /api/users** (users.php) - All logged in:\n- GET getUsers: Super Admin, Admin. Lists all users.\n- GET getUser: Super Admin, Admin. Single user by id.\n- GET getActivityLogs: Super Admin, Admin. Last 100 logs.\n- GET getDashboardStats: Any. Role-aware stats.\n- GET getProposalBadgeCount: Any. Sidebar badge.\n- GET getActiveUserTrend: Super Admin, Admin. Login trend.\n- GET getSystemSettings: Super Admin. AI config.\n- POST addUser: Super Admin. Create user + welcome email.\n- POST updateUserProfile: Any. Own phone/email.\n- POST changeOwnPassword: Any. Old+new password.\n- POST deleteUser: Super Admin. Not ID 1.\n- POST resetUserPassword: Super Admin, Admin. Random 12-char.\n- POST updateUserByAdmin: Super Admin. Full update.\n- POST saveSystemSettings: Super Admin. System+AI config.\n- POST sendLoginInfoWA: Super Admin, Admin. WhatsApp credentials.\n\n**3. /api/proposal** (proposal.php) - Largest (3470 lines):\n- GET getProposals: Any (scoped). Pagination, filters, tabs.\n- GET getProposal: Any (scoped). Single with revision history.\n- GET getArchivePengaju: Super Admin. Archive browse.\n- GET getArchiveByPengaju: Super Admin. Documents by pengaju.\n- GET getApprovalChain: Any (scoped). Chain for pengaju.\n- GET generateLembarPengesahan: SA/ketua-dpm/Owner. PDF for proposals.\n- GET generateLembarPengesahanLPJ: SA/ketua-dpm/Owner. PDF for LPJ.\n- GET getUndoPreview: Super Admin. Preview undo.\n- POST addProposal: User. Submit proposal/LPJ.\n- POST updateStatusProposal: Admin/SA/Approver. Approve/reject/revise.\n- POST reviseProposal: Any. Upload revision.\n- POST sendReminder: Super Admin. WhatsApp/email reminder.\n- POST editProposalByAdmin: Admin/SA. Edit budget.\n- POST updateProposalFinancialStatus: Super Admin. Financial status.\n- POST markLpjSelesai: Admin/SA. Mark LPJ done.\n- POST editProposalTanggalPelaksanaan: Super Admin. Edit date.\n- POST deleteProposal: Super Admin. Delete with LPJ.\n- POST undoLastApprovalAction: Super Admin. Undo with snapshot.\n- POST analyzeProposal: Any (scoped). AI analysis.\n- POST extractTextProposal: Any (scoped). PDF text extraction.\n- POST continueAnalysisProposal: Any (scoped). Continue AI chat.\n\n**4. /api/surat** (surat.php) - 2594 lines:\n- GET getSuratMasuk: Any (scoped). Paginated with filters.\n- GET getSuratMasukKategoriCounts: Super Admin.\n- GET getSuratKeluar: Any (scoped). Paginated.\n- GET getDisposisiBySurat: Any (scoped).\n- GET getDisposisiList: Any (scoped). Inbox/sent with stats.\n- GET getMonitoringSurat: Admin/SA. Monitoring view.\n- GET generatePengesahanSurat: Super Admin. PDF with QR.\n- POST addSuratMasuk: User. Create incoming letter.\n- POST updateSuratDetail: Super Admin. Update details.\n- POST addSuratKeluar: User. Send outgoing letter (creates paired surat_masuk for SA).\n- POST addDisposisiSurat: Super Admin. Create disposition.\n- POST updateDisposisiStatus: Any (scoped). Update disposition status.\n- POST reviseSuratKeluar: User. Upload revision.\n- POST updateStatusSurat: Admin/SA. Approve/reject with email.\n- POST deleteSuratMasuk/Keluar: Super Admin.\n\n**5. /api/alur** (alur.php) - Super Admin only:\n- GET getAlur, getApproverUsers, getUKMUsers, getUKMWithoutAlur, getUnresolvedApprovers\n- POST addAlur, updateAlur, deleteAlur\n\n**6. /api/pengumuman** (pengumuman.php):\n- GET getAnnouncements: Any.\n- POST addAnnouncement: Admin/SA.\n- POST deleteAnnouncement: Super Admin.\n\n**7. /api/arsip** (arsip.php):\n- GET getArsipData: Admin/SA.\n- POST addArsipData: Admin/SA. File upload.\n- POST deleteArsip: Super Admin.\n- POST analyzeArsip, extractTextArsip, continueAnalysisArsip: AI analysis.\n\n**8. /api/laporan** (laporan.php) - Admin/SA:\n- GET getLaporanMeta, getLaporanData, downloadExcel (PhpSpreadsheet).\n\n**9. /api/penggunaan_ruangan** (penggunaan_ruangan.php):\n- GET getPenggunaanRuangan: SA/User.\n- POST addPenggunaanRuangan, updatePenggunaanRuangan: Super Admin.\n\n**10. /api/login_audit** (login_audit.php) - Admin/SA:\n- GET paginated audit log with filters.\n\n**Security Middleware Chain**: applyApiCorsHeaders -\u003e applyApiSecurityHeaders -\u003e handleApiPreflightRequest -\u003e requireLogin -\u003e requireRole -\u003e requireCsrfToken (POST).\n\n**File Upload**: All uploads use `extractUploadPayload()` (supports base64 or multipart), validated by `uploadFileSecure()` with MIME/extension/size checks.\n\n**PDF Generation**: TCPDF streaming directly to browser. Proposal pengesahan (QR per approver), LPJ pengesahan, Surat pengesahan (QR).\n\n**AI Integration**: External API (configurable). Caching via ai_prompt_hash. Document locking. Rate-limited continuations.",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-api",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 4,
+      "sync_id": "obs-333fbd6fbdfc0d0f",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Authentication \u0026 Authorization System",
+      "content": "**What**: Complete session-based auth system with 6 roles, CSRF, rate limiting, login audit, and bcrypt passwords.\n\n**Where**: `includes/security.php` (CSRF, passwords, roles, CORS, rate limiting), `includes/functions.php` (isLoggedIn, requireLogin, getCurrentUser), `api/auth.php` (login/logout endpoints), `config/database.php` (session config).\n\n**Roles (6)**:\n1. Super Admin - Full access. Manages users, alur, system settings, financial status. Sees all data.\n2. Admin - Scoped to approval chain + own submissions. Can manage users, monitoring, logs, laporan.\n3. Approver - Sees only proposals in their chain. Can approve/reject/revise. No surat access.\n4. User - UKM level. Submit proposals/LPJ, send surat keluar, manage rooms. Own data only.\n5. Disposisi - Limited to: Dashboard, Surat Masuk, Disposisi, Profil. Redirected for other pages.\n6. Read Only - View-only: Dashboard, Surat Masuk, Disposisi, Proposal, Profil.\n\n**Login Flow**:\n1. CSRF validation (requireCsrfToken)\n2. Rate limiting check (5 attempts/15min, keyed by sha256(IP+username))\n3. User lookup (case-insensitive)\n4. Password verify (bcrypt, legacy plaintext auto-upgrade with force_change=1)\n5. Session creation (session_regenerate_id, set $_SESSION['user'])\n6. CSRF rotation (csrfRotateToken)\n7. Login audit logging (recordLoginAudit)\n8. Activity logging (recordLog)\n\n**Session Config**: 8-hour lifetime, httponly, SameSite=Lax, secure when HTTPS, path=/.\n\n**Password Security**: bcrypt via password_hash(). Legacy plaintext auto-upgraded on login. force_change flag for new/reset accounts. Min 6 chars for changes.\n\n**CSRF**: 32-byte random hex in $_SESSION. Injected as window.csrfToken in header.php. Validated via hash_equals(). Rotated on login/logout.\n\n**Rate Limiting**: File-based in /tmp/. Login: 5/15min per IP+user. WhatsApp: 50/15min per actor.\n\n**Page Guards in index.php**:\n- Disposisi: dashboard, surat_masuk, disposisi, profil, login only\n- Read Only: dashboard, surat_masuk, disposisi, proposal, profil, login only\n- Admin pages (monitoring, laporan, arsip, activity_logs, login_audit): SA+Admin\n- SA pages (users, alur, system_settings, arsip_proposal): SA only\n- penggunaan_ruangan: SA+User only\n\n**Data Scoping** (proposal): User=own, Approver=chain, Admin=chain+own, SA=all, Read Only=all.\n\n**Key Functions**: isLoggedIn(), getCurrentUser(), requireLogin(), requireRole($roles), redirectUnlessPageRole($roles, $redirectTo), normalizeApprover() (underscore/space normalization), verifyPassword(), hashPassword(), csrfGenerateToken(), csrfValidateToken(), csrfRotateToken().",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-auth",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 5,
+      "sync_id": "obs-db3039d16bbd3dcb",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Frontend/UI Architecture",
+      "content": "**What**: Server-rendered PHP with Tailwind CDN, vanilla JS, PWA support, role-specific mobile layouts.\n\n**Where**: templates/header.php (head+CDN), sidebar.php (nav), footer.php (JS), 3 mobile nav files. public/css/styles.css. public/js/proposal-page.js.\n\n**Templating**: PHP include-based. Flow: index.php -\u003e pages/{page}.php -\u003e header.php -\u003e sidebar.php -\u003e [content] -\u003e footer.php. Login page standalone (no header/sidebar/footer).\n\n**Styling (3 layers)**:\n1. Tailwind CDN with custom maroon theme (primary=#8B1538, primary-dark=#6B0F2A, primary-light=#A0204D)\n2. Custom CSS (styles.css): CSS vars, sidebar transitions, status badges, loading spinner, mobile nav, PWA styles, safe area insets\n3. Inline \u003cstyle\u003e per page for page-specific components\n\n**Design System**: Maroon primary (#8B1538), Inter font (300-800), Font Awesome 6.4, rounded-xl/2xl/3xl, subtle shadows, gradient CTAs.\n\n**JavaScript**: No framework, no bundler. Vanilla ES6+ with async/await Fetch API.\n- Global: showToast(), showLoading/hideLoading(), apiCall(), formatDate/Currency(), getStatusClass(), handleLogout(), toggleSidebar(), loadProposalBadge()\n- window.csrfToken injected in header.php\n- All API calls use FormData with csrf_token appended\n- proposal-page.js (4412 lines) is most complex JS file\n\n**UI Components**:\n- Modals: fixed inset-0 with bg-black/50, open/close via hidden class toggle\n- Tables: Hand-built HTML, server-side pagination, client-side sort\n- Cards: .dashboard-panel pattern (white bg, rounded, shadow, border)\n- Tabs: .tab-chip/.filter-chip with active=bg-primary text-white\n- Badges: Sidebar badges (red=pending, amber=overdue), mobile nav badges\n- Empty states: Centered icon + message + optional action\n- Toasts: Fixed bottom-right, success/error/info types, auto-dismiss 3s\n- Loading: Full-screen overlay + per-section skeletons + button spinners\n\n**Responsive**: \n- Mobile (\u003c768px): Bottom tab nav replaces sidebar for Approver/User/SA roles. SA has \"Lainnya\" bottom sheet.\n- Tablet (768-1023px): Sidebar hidden for some roles\n- Desktop (\u003e=1024px): Full sidebar\n- Touch targets: 48px minimum on coarse pointers\n- Safe area insets throughout\n\n**PWA**: Service worker (sw.js, cache-first for static, network-first for navigation), manifest.json (standalone, portrait, #8B1538), offline.html, install prompt with 7-day dismiss, full icon set (16-512px + maskable + apple-touch).\n\n**Charts**: Chart.js CDN. Used in monitoring (doughnut), dashboard (line trend), users (bar trend with range toggle).\n\n**Forms**: CSRF via window.csrfToken in FormData. HTML5 required/pattern. Server-side validation. PDF-only uploads for proposals/surat (10MB max).",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-frontend",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 6,
+      "sync_id": "obs-7296b0f3319792e1",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Complete Database Schema (14 tables)",
+      "content": "**What**: Complete database schema for lkukm_db with 14 active tables, all using soft foreign keys (no DB-level FK constraints).\n\n**Where**: Canonical schema at `config/schema.sql`. Connection in `config/database.php` (host=localhost, db=lkukm_db, user=lkukm_user, charset=utf8mb4).\n\n**Tables**:\n\n1. **users** - User accounts. Columns: id, username (unique), password (bcrypt), name, jabatan, sebutan, role, phone, email, nim, unit, force_change, created_date. Roles: Super Admin, Admin, User, Approver, Disposisi, Read Only.\n\n2. **activity_logs** - Audit trail. Columns: id, waktu, username, nama_lengkap, role, aktivitas (JSON in newer entries). Indexes: idx_waktu, idx_username.\n\n3. **login_audit_logs** - Auth audit. Columns: id, created_at, attempted_username, user_id, user_role, status (enum: success/failed/rejected/logout), reason_code, reason_label, ip_address, user_agent, session_hash, request_id.\n\n4. **surat_masuk** - Incoming letters. Columns: id, nomor_surat, tanggal_terima, pengirim, no_hp, perkara, kategori, extra_data (JSON), status, keterangan, url_dokumen, owner (FK users.username), ref_id, nim.\n\n5. **surat_keluar** - Outgoing letters. Columns: id, nomor_surat, tanggal_kirim, tujuan, perkara, kategori, extra_data (JSON), status, history (JSON), url_dokumen, created_by (FK users.username), ref_id, manual_name, manual_phone, idempotency_key (unique).\n\n6. **surat_disposisi** - Dispositions. Columns: id, surat_masuk_id (FK), ref_id, nomor_surat, perihal, dari_username, dari_nama, kepada_username, kepada_nama, kepada_role, isi_disposisi, prioritas (Rendah/Sedang/Tinggi), tenggat, status, created_at, updated_at.\n\n7. **arsip** - Document archive with AI. Columns: id, tanggal, nama_surat, perkara, url_file, uploaded_by, keterangan, content_text, ai_analysis, ai_analysis_at, ai_prompt_hash, ai_usage (JSON).\n\n8. **penggunaan_ruangan** - Room bookings. Columns: id, tanggal, jam_mulai, jam_selesai, ruangan, pengguna_ruangan, created_by, created_at.\n\n9. **pengumuman** - Announcements. Columns: id, tanggal, isi, created_by.\n\n10. **proposal** - Proposals AND LPJ (distinguished by jenis field). Columns: id, tanggal_upload, nama_kegiatan, jenis (Proposal/LPJ), pengaju, status, status_keuangan (Menunggu/Proses Keuangan/Dicairkan), keterangan, url_file, content_text, ai_analysis, ai_analysis_at, ai_prompt_hash, ai_usage, ketua, nim_ketua, nama_bank, no_rekening, jumlah_anggaran (decimal 15,2), tanggal_pelaksanaan, current_approver, parent_proposal_id (self-FK for LPJ), history (JSON).\n\n11. **proposal_revision_history** - Revision tracking. Columns: id, proposal_id, revision_cycle, version_no, event_type (REQUEST/UPLOAD), approver_username, approver_name, request_note, uploaded_by, uploaded_at, file_url.\n\n12. **alur** - Approval chains. Columns: id, pengaju (unique), acc1-acc6 (approver usernames).\n\n13. **proposal_reminder_log** - Reminder tracking. Columns: id, proposal_id, milestone, recipient_type, recipient_key, sent_at. Unique constraint on (proposal_id, milestone, recipient_type, recipient_key).\n\n14. **system_config** - Key-value config. Columns: id, config_key (unique), config_value. Keys: OPEN_SURAT, SYSTEM_NAME, SYSTEM_DESC, AI_BASE_URL, AI_API_KEY, AI_MODEL, PROPOSAL_PENDING_THRESHOLD_DAYS.\n\n**Design Patterns**: Soft FK only (app-level), denormalized names alongside usernames, JSON in TEXT columns (history fields), lazy schema migration via ALTER TABLE at runtime, idempotency keys on surat_keluar.",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-database",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 7,
+      "sync_id": "obs-e06f5ca157c1e999",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Project Architecture Overview",
+      "content": "**What**: LK UKMs is a native PHP application (no framework) for managing proposals, LPJ, surat, disposisi, pengumuman, users, and approval workflows for student organizations (UKM) at UNISBANK Semarang. Converted from Google Apps Script.\n\n**Why**: Core system for UKM administrative workflows at Universitas Stikubank.\n\n**Where**: Deployed at `/var/www/lk.pjdigital.top/`\n\n**Architecture**:\n- Entry point: `index.php` (router) with `.htaccess` rewrite rules\n- API layer: `api/*.php` (10 files) - JSON endpoints for AJAX calls\n- Page layer: `pages/*.php` (17 files) - server-rendered HTML views\n- Templates: `templates/header.php`, `sidebar.php`, `footer.php` + 3 mobile nav files\n- Includes: `includes/functions.php` (2615 lines), `security.php` (370 lines), `email.php` (320 lines), `env.php`\n- Config: `config/database.php` (DB connection + session), `config/schema.sql` (authoritative schema)\n- Public: `public/css/styles.css`, `public/js/proposal-page.js` (4412 lines), `public/icons/`\n- Scripts: `scripts/` - migrations, checks, seed scripts\n- Docs: `CLAUDE.md`, `panduanagen.md`, `arsitektur.md`, `analisis.md`, `AGENTS.md`\n- Wiki: `.ai-team/wiki/` (12 files), `.ai-team/rules/` (4 files)\n- AI agents: `.pi/agents/` (5 agent definitions), `.ai-team/` (6-role team)\n\n**Request Flow**:\nBrowser -\u003e Apache (.htaccess) -\u003e index.php (router) -\u003e api/*.php OR pages/*.php -\u003e templates (header/sidebar/footer) -\u003e includes (functions/security) -\u003e config/database.php -\u003e MySQL\n\n**Tech Stack**:\n- Backend: Native PHP 8.x, MySQL/MariaDB, mysqli with prepared statements\n- Frontend: Tailwind CDN (maroon theme #8B1538), Font Awesome 6.4, Chart.js, vanilla JS\n- Dependencies: TCPDF (PDF), endroid/qr-code (QR), PHPMailer (email), PhpSpreadsheet (Excel)\n- PWA: Service worker, manifest, offline page, mobile bottom navs per role\n- Timezone: Asia/Jakarta\n\n**Largest Files**: api/proposal.php (3470 lines), includes/functions.php (2615 lines), api/surat.php (2594 lines), pages/surat_masuk.php (2528 lines), public/js/proposal-page.js (4412 lines)",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-architecture",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 8,
+      "sync_id": "obs-8cf6adb2f29165f3",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Business Modules \u0026 Workflows",
+      "content": "**What**: All business modules with their workflows, status transitions, and business rules.\n\n**Where**: api/proposal.php, api/surat.php, api/users.php, api/alur.php, api/pengumuman.php, api/arsip.php, api/penggunaan_ruangan.php, api/laporan.php. Corresponding pages in pages/*.php.\n\n**1. PROPOSAL \u0026 LPJ MODULE** (core module):\n- Shared `proposal` table, distinguished by `jenis` field (Proposal/LPJ)\n- Proposal Status: Menunggu {acc1} -\u003e Menunggu {acc2} -\u003e ... -\u003e Disetujui (or Ditolak/Revisi at any step)\n- Revision: Revisi -\u003e User uploads -\u003e Menunggu {same approver}\n- Financial Status: Menunggu -\u003e Proses Keuangan -\u003e Dicairkan (SA only)\n- LPJ Lifecycle: Parent proposal must be Disetujui + Dicairkan -\u003e LPJ created -\u003e Same approval chain -\u003e Approved -\u003e Marked Selesai\n- Wajib LPJ: Proposal with status_keuangan=Dicairkan and no linked LPJ\n- Undo: SA can undo last approval via _snapshot in history JSON. Blocked if financial status changed.\n- Approval chain: Up to 6 approvers per pengaju (acc1-acc6 in alur table)\n- normalizeApprover() for underscore/space matching\n- Auto-reminders: H-3, H-5, H-7 milestones\n- Role scoping: User=own, Approver=chain, Admin=chain+own, SA=all\n\n**2. SURAT (LETTER) MODULE**:\n- Surat Masuk: SA creates -\u003e Menunggu -\u003e Disetujui/Revisi/Ditolak (SA only)\n- Surat Keluar: User sends to SA -\u003e Creates paired surat_masuk for SA -\u003e SA reviews -\u003e Status syncs bidirectionally\n- Kategori system with dynamic extra_data (JSON)\n- DOCX-to-PDF conversion via ZipArchive+TCPDF\n- Idempotency key on surat_keluar\n\n**3. DISPOSISI (DISPOSITION) MODULE**:\n- SA creates dispositions from surat_masuk to any user\n- Statuses: Terkirim -\u003e Dibaca -\u003e Diproses -\u003e Selesai\n- Priority: Rendah/Sedang/Tinggi with optional deadline (tenggat)\n- Inbox/Sent box model\n- Email+WhatsApp notifications on creation\n\n**4. USER MANAGEMENT**:\n- CRUD by SA. Admin can reset passwords.\n- Default password: 123456 (force_change on first login)\n- Welcome email on creation if email provided\n- Login info via WhatsApp (sendLoginInfoWA)\n- User ID 1 (first SA) cannot be deleted\n\n**5. APPROVAL CHAIN (ALUR) MODULE**:\n- SA configures acc1-acc6 per pengaju\n- Health checks: getUKMWithoutAlur(), getUnresolvedApprovers()\n\n**6. PENGUMUMAN**: Simple CRUD. Admin/SA create, SA delete, all view.\n\n**7. ARSIP (ARCHIVE)**: Document archive with AI analysis. SA/Admin add/delete. Text extraction + AI analysis with caching.\n\n**8. PENGGUNAAN RUANGAN**: Room booking. SA/User view, SA add/update.\n\n**9. LAPORAN (REPORTS)**: 4 report types: Rekapitulasi Proposal, LPJ, Surat, Keuangan. Excel export via PhpSpreadsheet. Admin/SA only.\n\n**10. AI ANALYSIS**: External API (configurable). Applied to proposals and arsip. Features: text extraction from PDF/DOCX, caching via ai_prompt_hash, document locking, rate-limited continuations, DB append for chat history.\n\n**11. NOTIFICATIONS**: WhatsApp via wa.dwibudi.my.id API. Email via PHPMailer/Gmail SMTP. Events: submit, approve, reject, revise, remind, disposisi, financial change, undo.\n\n**12. PDF GENERATION**: TCPDF with QR codes. Proposal pengesahan (QR per approver), LPJ pengesahan, Surat pengesahan.\n\n**13. AUDIT LOGGING**: activity_logs (general), login_audit_logs (auth). Functions: recordLog(), recordLogSystem(), recordEventLog(), recordLoginAudit(). Request ID correlation.",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-modules",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 9,
+      "sync_id": "obs-1edf185eec4885c1",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "discovery",
+      "title": "LK UKMs - Documentation \u0026 Wiki Structure",
+      "content": "**What**: Comprehensive documentation across 85+ markdown files organized in multiple layers.\n\n**Where**: Root .md files, .ai-team/wiki/ (12 files), .ai-team/rules/ (4 files), docs/ (9 files), .pi/agents/ (5 files), .ai-team/output/ (30+ files).\n\n**Core Docs**:\n- `CLAUDE.md` - Primary AI agent guidance. Architecture, routing, DB, security, commands.\n- `panduanagen.md` - Comprehensive Indonesian guide (most current). Project structure, routing, roles, DB schema, helpers, API endpoints, workflows.\n- `AGENTS.md` - Agent operating notes. References RTK.md, CLAUDE.md, panduanagen.md.\n- `arsitektur.md` - Architecture with Mermaid diagrams, routing map, role matrix, proposal lifecycle, security findings.\n- `analisis.md` - Codebase analysis (2026-06-15). All modules, integrations, security patterns, statistics.\n\n**Wiki Layer** (.ai-team/wiki/):\n- 00-overview.md, 01-architecture.md, 02-routing.md, 03-security.md\n- 04-database-schema.md, 05-api-map.md, 06-page-map.md\n- 07-proposal-lpj-workflow.md, 08-surat-workflow.md\n- 09-upload-pdf-notification-ai.md, 10-frontend-patterns.md\n- 99-known-issues.md\n\n**Rules** (.ai-team/rules/): agent-routing.md, qa-rules.md, security-rules.md, development-rules.md\n\n**Pi Agents** (.pi/agents/): lk-analyst, lk-developer, lk-qa, lk-designer, lk-docs (all gpt-5.5, thinking: medium)\n\n**Task Lists**: TASKLIST-KEAMANAN-KRITIS.md (P0-P3 all done), TASKLIST-DASHBOARD-IMPROVEMENT.md (4 phases done), TASKLIST-PROPOSAL-IMPROVEMENT.md (4/5 phases done), tasklist-perbaikan-proposal.md (4 phases)\n\n**Progress**: progres-pwa.md (User U1-U6 done, Approver done, SA not started), super-pwa.md (SA1-SA8 planned)\n\n**Integration Docs**: wa.md (WhatsApp), plan-slack.md (Slack-Pi integration)\n\n**docs/ Directory**: menu-role-matrix.md, disposisi-uiux-checklist.md/changelog.md, proposal-uiux-checklist.md, analisis-ai-perbaikan-checklist.md, pwa-requirements-validation.md, kipk-cleanup-task-list.md, pengembangan-checklist.md, task-list.md\n\n**Note**: Root README.md and CHANGELOG.md belong to Engram tool, not LK UKMs.\n\n**Notable**: panduanagen.md is more current than CLAUDE.md. KIPK module fully removed (2026-06-15). All security tasks (P0-P3) completed. AI model: Sumopod MiniMax-M2.7-highspeed.",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-docs",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 10,
+      "sync_id": "obs-b542fc30d4ab68c5",
+      "session_id": "019eff00-d6c2-73b4-a3a7-6876a7386e73",
+      "type": "architecture",
+      "title": "Auth system architecture of LK UKMs PHP app",
+      "content": "**What**: Complete authentication and authorization system mapped for the LK UKMs PHP application at /var/www/lk.pjdigital.top\n\n**Why**: Need full understanding of auth flows for security review and development\n\n**Where**: \n- `/includes/security.php` — CSRF, password hashing, rate limiting, CORS, `requireRole()`, `redirectUnlessPageRole()`\n- `/includes/functions.php` — `isLoggedIn()`, `getCurrentUser()`, `requireLogin()`, `normalizeApprover()`, `recordLoginAudit()`\n- `/api/auth.php` — Login/logout/session-check/CSRF-token API endpoints\n- `/pages/login.php` — Server-rendered login form with identical logic\n- `/config/database.php` — Session configuration (8-hour lifetime, httponly, SameSite=Lax)\n- `/index.php` — Router with page-level role guards\n- `/api/bootstrap.php` — Blocks direct .php access to API files\n- `/api/users.php` — User CRUD with role validation, password change\n- `/api/proposal.php` — Data-scoped access per role\n- `/templates/sidebar.php` — Role-based menu visibility\n- `/templates/header.php` — CSRF token injected into JS\n- `/templates/footer.php` — Client-side logout handler\n\n**Learned**:\n- 6 roles: Super Admin, Admin, User, Approver, Disposisi, Read Only\n- Session-based auth only (no OAuth, JWT, or token-based API auth)\n- Dual login paths: API (`/api/auth` POST) and server-rendered (`/login` POST)\n- Legacy plaintext password support with automatic bcrypt upgrade\n- Rate limiting: 5 attempts per 15 min per IP+username\n- CSRF tokens: session-stored, generated via `bin2hex(random_bytes(32))`\n- `session_regenerate_id(true)` on login/logout to prevent session fixation\n- Session cookie: httponly, SameSite=Lax, secure flag when HTTPS\n- Data scoping in proposals: User sees own, Approver sees chain, Admin sees chain+own, Super Admin/Read Only see all\n- Page routing in index.php has role guards that redirect restricted roles\n- `requireRole()` returns 403 JSON; `redirectUnlessPageRole()` returns 302 redirect\n- Login audit log tracks all auth events (success, failed, rejected, logout)",
+      "project": "simapro",
+      "scope": "project",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:39:55",
+      "created_at": "2026-06-25 13:39:55",
+      "updated_at": "2026-06-25 13:39:55"
+    },
+    {
+      "id": 11,
+      "sync_id": "obs-d9e940321ac3c0b3",
+      "session_id": "019eff03-18f6-7457-bbb0-d071094f83ad",
+      "type": "discovery",
+      "title": "LK UKMs codebase documentation exploration complete",
+      "content": "**What**: Exhaustive read of all 80+ documentation files in the LK UKMs codebase\n**Why**: Research task to understand the full documentation landscape of the project\n**Where**: /var/www/lk.pjdigital.top — root .md files, .ai-team/wiki/, .ai-team/rules/, .ai-team/output/, docs/, .pi/agents/, autopost/skill-docs/\n**Learned**: \n- LK UKMs is a native PHP application (no framework) for managing proposals, LPJ, surat, disposisi, approval workflows for student organizations at UNISBANK Semarang\n- 12 database tables, 6 roles (Super Admin, Admin, User, Approver, Disposisi, Read Only)\n- AI team structure with roles: orchestrator, analyst, developer, designer, QA, docs\n- Wiki-first documentation approach in .ai-team/wiki/ with 12 structured files\n- Multiple tasklists completed: security (P0-P3), dashboard improvement, proposal UI/UX, KIPK cleanup\n- PWA mobile refactoring in progress (User sprints U1-U6 complete, Super Admin SA1-SA8 planned)\n- Slack-Pi bridge integration planned\n- Autopost module (standalone) for social media posting via Repliz API\n- Engram README.md is NOT the project README — it's from the Engram persistent memory tool\n- CHANGELOG.md is also for Engram, not LK UKMs",
+      "project": "simapro",
+      "scope": "project",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:42:07",
+      "created_at": "2026-06-25 13:42:07",
+      "updated_at": "2026-06-25 13:42:07"
+    },
+    {
+      "id": 12,
+      "sync_id": "obs-bb1a7af9c3bf8b00",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Complete API Endpoint Map (10 endpoints)",
+      "content": "**What**: All 10 API endpoints with their actions, methods, roles, and parameters.\n\n**Where**: `api/*.php` files, routed via `index.php`. All require `requireLogin()` except auth endpoints. All POST write actions require CSRF validation.\n\n**Routing**: `index.php` maps URI prefixes (e.g., `/api/auth` -\u003e `api/auth.php`). `api/bootstrap.php` blocks direct `.php` access in URLs.\n\n**1. /api/auth** (auth.php) - No auth required:\n- POST login: username, password + CSRF. Rate limited (5/15min). Login audit.\n- POST logout: CSRF. Destroys session.\n- POST checkSession: Returns current session status.\n- POST getCsrfToken: Returns new CSRF token.\n\n**2. /api/users** (users.php) - All logged in:\n- GET getUsers: Super Admin, Admin. Lists all users.\n- GET getUser: Super Admin, Admin. Single user by id.\n- GET getActivityLogs: Super Admin, Admin. Last 100 logs.\n- GET getDashboardStats: Any. Role-aware stats.\n- GET getProposalBadgeCount: Any. Sidebar badge.\n- GET getActiveUserTrend: Super Admin, Admin. Login trend.\n- GET getSystemSettings: Super Admin. AI config.\n- POST addUser: Super Admin. Create user + welcome email.\n- POST updateUserProfile: Any. Own phone/email.\n- POST changeOwnPassword: Any. Old+new password.\n- POST deleteUser: Super Admin. Not ID 1.\n- POST resetUserPassword: Super Admin, Admin. Random 12-char.\n- POST updateUserByAdmin: Super Admin. Full update.\n- POST saveSystemSettings: Super Admin. System+AI config.\n- POST sendLoginInfoWA: Super Admin, Admin. WhatsApp credentials.\n\n**3. /api/proposal** (proposal.php) - Largest (3470 lines):\n- GET getProposals: Any (scoped). Pagination, filters, tabs.\n- GET getProposal: Any (scoped). Single with revision history.\n- GET getArchivePengaju: Super Admin. Archive browse.\n- GET getArchiveByPengaju: Super Admin. Documents by pengaju.\n- GET getApprovalChain: Any (scoped). Chain for pengaju.\n- GET generateLembarPengesahan: SA/ketua-dpm/Owner. PDF for proposals.\n- GET generateLembarPengesahanLPJ: SA/ketua-dpm/Owner. PDF for LPJ.\n- GET getUndoPreview: Super Admin. Preview undo.\n- POST addProposal: User. Submit proposal/LPJ.\n- POST updateStatusProposal: Admin/SA/Approver. Approve/reject/revise.\n- POST reviseProposal: Any. Upload revision.\n- POST sendReminder: Super Admin. WhatsApp/email reminder.\n- POST editProposalByAdmin: Admin/SA. Edit budget.\n- POST updateProposalFinancialStatus: Super Admin. Financial status.\n- POST markLpjSelesai: Admin/SA. Mark LPJ done.\n- POST editProposalTanggalPelaksanaan: Super Admin. Edit date.\n- POST deleteProposal: Super Admin. Delete with LPJ.\n- POST undoLastApprovalAction: Super Admin. Undo with snapshot.\n- POST analyzeProposal: Any (scoped). AI analysis.\n- POST extractTextProposal: Any (scoped). PDF text extraction.\n- POST continueAnalysisProposal: Any (scoped). Continue AI chat.\n\n**4. /api/surat** (surat.php) - 2594 lines:\n- GET getSuratMasuk: Any (scoped). Paginated with filters.\n- GET getSuratMasukKategoriCounts: Super Admin.\n- GET getSuratKeluar: Any (scoped). Paginated.\n- GET getDisposisiBySurat: Any (scoped).\n- GET getDisposisiList: Any (scoped). Inbox/sent with stats.\n- GET getMonitoringSurat: Admin/SA. Monitoring view.\n- GET generatePengesahanSurat: Super Admin. PDF with QR.\n- POST addSuratMasuk: User. Create incoming letter.\n- POST updateSuratDetail: Super Admin. Update details.\n- POST addSuratKeluar: User. Send outgoing letter (creates paired surat_masuk for SA).\n- POST addDisposisiSurat: Super Admin. Create disposition.\n- POST updateDisposisiStatus: Any (scoped). Update disposition status.\n- POST reviseSuratKeluar: User. Upload revision.\n- POST updateStatusSurat: Admin/SA. Approve/reject with email.\n- POST deleteSuratMasuk/Keluar: Super Admin.\n\n**5. /api/alur** (alur.php) - Super Admin only:\n- GET getAlur, getApproverUsers, getUKMUsers, getUKMWithoutAlur, getUnresolvedApprovers\n- POST addAlur, updateAlur, deleteAlur\n\n**6. /api/pengumuman** (pengumuman.php):\n- GET getAnnouncements: Any.\n- POST addAnnouncement: Admin/SA.\n- POST deleteAnnouncement: Super Admin.\n\n**7. /api/arsip** (arsip.php):\n- GET getArsipData: Admin/SA.\n- POST addArsipData: Admin/SA. File upload.\n- POST deleteArsip: Super Admin.\n- POST analyzeArsip, extractTextArsip, continueAnalysisArsip: AI analysis.\n\n**8. /api/laporan** (laporan.php) - Admin/SA:\n- GET getLaporanMeta, getLaporanData, downloadExcel (PhpSpreadsheet).\n\n**9. /api/penggunaan_ruangan** (penggunaan_ruangan.php):\n- GET getPenggunaanRuangan: SA/User.\n- POST addPenggunaanRuangan, updatePenggunaanRuangan: Super Admin.\n\n**10. /api/login_audit** (login_audit.php) - Admin/SA:\n- GET paginated audit log with filters.\n\n**Security Middleware Chain**: applyApiCorsHeaders -\u003e applyApiSecurityHeaders -\u003e handleApiPreflightRequest -\u003e requireLogin -\u003e requireRole -\u003e requireCsrfToken (POST).\n\n**File Upload**: All uploads use `extractUploadPayload()` (supports base64 or multipart), validated by `uploadFileSecure()` with MIME/extension/size checks.\n\n**PDF Generation**: TCPDF streaming directly to browser. Proposal pengesahan (QR per approver), LPJ pengesahan, Surat pengesahan (QR).\n\n**AI Integration**: External API (configurable). Caching via ai_prompt_hash. Document locking. Rate-limited continuations.",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-api",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 13,
+      "sync_id": "obs-333fbd6fbdfc0d0f",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Authentication \u0026 Authorization System",
+      "content": "**What**: Complete session-based auth system with 6 roles, CSRF, rate limiting, login audit, and bcrypt passwords.\n\n**Where**: `includes/security.php` (CSRF, passwords, roles, CORS, rate limiting), `includes/functions.php` (isLoggedIn, requireLogin, getCurrentUser), `api/auth.php` (login/logout endpoints), `config/database.php` (session config).\n\n**Roles (6)**:\n1. Super Admin - Full access. Manages users, alur, system settings, financial status. Sees all data.\n2. Admin - Scoped to approval chain + own submissions. Can manage users, monitoring, logs, laporan.\n3. Approver - Sees only proposals in their chain. Can approve/reject/revise. No surat access.\n4. User - UKM level. Submit proposals/LPJ, send surat keluar, manage rooms. Own data only.\n5. Disposisi - Limited to: Dashboard, Surat Masuk, Disposisi, Profil. Redirected for other pages.\n6. Read Only - View-only: Dashboard, Surat Masuk, Disposisi, Proposal, Profil.\n\n**Login Flow**:\n1. CSRF validation (requireCsrfToken)\n2. Rate limiting check (5 attempts/15min, keyed by sha256(IP+username))\n3. User lookup (case-insensitive)\n4. Password verify (bcrypt, legacy plaintext auto-upgrade with force_change=1)\n5. Session creation (session_regenerate_id, set $_SESSION['user'])\n6. CSRF rotation (csrfRotateToken)\n7. Login audit logging (recordLoginAudit)\n8. Activity logging (recordLog)\n\n**Session Config**: 8-hour lifetime, httponly, SameSite=Lax, secure when HTTPS, path=/.\n\n**Password Security**: bcrypt via password_hash(). Legacy plaintext auto-upgraded on login. force_change flag for new/reset accounts. Min 6 chars for changes.\n\n**CSRF**: 32-byte random hex in $_SESSION. Injected as window.csrfToken in header.php. Validated via hash_equals(). Rotated on login/logout.\n\n**Rate Limiting**: File-based in /tmp/. Login: 5/15min per IP+user. WhatsApp: 50/15min per actor.\n\n**Page Guards in index.php**:\n- Disposisi: dashboard, surat_masuk, disposisi, profil, login only\n- Read Only: dashboard, surat_masuk, disposisi, proposal, profil, login only\n- Admin pages (monitoring, laporan, arsip, activity_logs, login_audit): SA+Admin\n- SA pages (users, alur, system_settings, arsip_proposal): SA only\n- penggunaan_ruangan: SA+User only\n\n**Data Scoping** (proposal): User=own, Approver=chain, Admin=chain+own, SA=all, Read Only=all.\n\n**Key Functions**: isLoggedIn(), getCurrentUser(), requireLogin(), requireRole($roles), redirectUnlessPageRole($roles, $redirectTo), normalizeApprover() (underscore/space normalization), verifyPassword(), hashPassword(), csrfGenerateToken(), csrfValidateToken(), csrfRotateToken().",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-auth",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 14,
+      "sync_id": "obs-db3039d16bbd3dcb",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Frontend/UI Architecture",
+      "content": "**What**: Server-rendered PHP with Tailwind CDN, vanilla JS, PWA support, role-specific mobile layouts.\n\n**Where**: templates/header.php (head+CDN), sidebar.php (nav), footer.php (JS), 3 mobile nav files. public/css/styles.css. public/js/proposal-page.js.\n\n**Templating**: PHP include-based. Flow: index.php -\u003e pages/{page}.php -\u003e header.php -\u003e sidebar.php -\u003e [content] -\u003e footer.php. Login page standalone (no header/sidebar/footer).\n\n**Styling (3 layers)**:\n1. Tailwind CDN with custom maroon theme (primary=#8B1538, primary-dark=#6B0F2A, primary-light=#A0204D)\n2. Custom CSS (styles.css): CSS vars, sidebar transitions, status badges, loading spinner, mobile nav, PWA styles, safe area insets\n3. Inline \u003cstyle\u003e per page for page-specific components\n\n**Design System**: Maroon primary (#8B1538), Inter font (300-800), Font Awesome 6.4, rounded-xl/2xl/3xl, subtle shadows, gradient CTAs.\n\n**JavaScript**: No framework, no bundler. Vanilla ES6+ with async/await Fetch API.\n- Global: showToast(), showLoading/hideLoading(), apiCall(), formatDate/Currency(), getStatusClass(), handleLogout(), toggleSidebar(), loadProposalBadge()\n- window.csrfToken injected in header.php\n- All API calls use FormData with csrf_token appended\n- proposal-page.js (4412 lines) is most complex JS file\n\n**UI Components**:\n- Modals: fixed inset-0 with bg-black/50, open/close via hidden class toggle\n- Tables: Hand-built HTML, server-side pagination, client-side sort\n- Cards: .dashboard-panel pattern (white bg, rounded, shadow, border)\n- Tabs: .tab-chip/.filter-chip with active=bg-primary text-white\n- Badges: Sidebar badges (red=pending, amber=overdue), mobile nav badges\n- Empty states: Centered icon + message + optional action\n- Toasts: Fixed bottom-right, success/error/info types, auto-dismiss 3s\n- Loading: Full-screen overlay + per-section skeletons + button spinners\n\n**Responsive**: \n- Mobile (\u003c768px): Bottom tab nav replaces sidebar for Approver/User/SA roles. SA has \"Lainnya\" bottom sheet.\n- Tablet (768-1023px): Sidebar hidden for some roles\n- Desktop (\u003e=1024px): Full sidebar\n- Touch targets: 48px minimum on coarse pointers\n- Safe area insets throughout\n\n**PWA**: Service worker (sw.js, cache-first for static, network-first for navigation), manifest.json (standalone, portrait, #8B1538), offline.html, install prompt with 7-day dismiss, full icon set (16-512px + maskable + apple-touch).\n\n**Charts**: Chart.js CDN. Used in monitoring (doughnut), dashboard (line trend), users (bar trend with range toggle).\n\n**Forms**: CSRF via window.csrfToken in FormData. HTML5 required/pattern. Server-side validation. PDF-only uploads for proposals/surat (10MB max).",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-frontend",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 15,
+      "sync_id": "obs-7296b0f3319792e1",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Complete Database Schema (14 tables)",
+      "content": "**What**: Complete database schema for lkukm_db with 14 active tables, all using soft foreign keys (no DB-level FK constraints).\n\n**Where**: Canonical schema at `config/schema.sql`. Connection in `config/database.php` (host=localhost, db=lkukm_db, user=lkukm_user, charset=utf8mb4).\n\n**Tables**:\n\n1. **users** - User accounts. Columns: id, username (unique), password (bcrypt), name, jabatan, sebutan, role, phone, email, nim, unit, force_change, created_date. Roles: Super Admin, Admin, User, Approver, Disposisi, Read Only.\n\n2. **activity_logs** - Audit trail. Columns: id, waktu, username, nama_lengkap, role, aktivitas (JSON in newer entries). Indexes: idx_waktu, idx_username.\n\n3. **login_audit_logs** - Auth audit. Columns: id, created_at, attempted_username, user_id, user_role, status (enum: success/failed/rejected/logout), reason_code, reason_label, ip_address, user_agent, session_hash, request_id.\n\n4. **surat_masuk** - Incoming letters. Columns: id, nomor_surat, tanggal_terima, pengirim, no_hp, perkara, kategori, extra_data (JSON), status, keterangan, url_dokumen, owner (FK users.username), ref_id, nim.\n\n5. **surat_keluar** - Outgoing letters. Columns: id, nomor_surat, tanggal_kirim, tujuan, perkara, kategori, extra_data (JSON), status, history (JSON), url_dokumen, created_by (FK users.username), ref_id, manual_name, manual_phone, idempotency_key (unique).\n\n6. **surat_disposisi** - Dispositions. Columns: id, surat_masuk_id (FK), ref_id, nomor_surat, perihal, dari_username, dari_nama, kepada_username, kepada_nama, kepada_role, isi_disposisi, prioritas (Rendah/Sedang/Tinggi), tenggat, status, created_at, updated_at.\n\n7. **arsip** - Document archive with AI. Columns: id, tanggal, nama_surat, perkara, url_file, uploaded_by, keterangan, content_text, ai_analysis, ai_analysis_at, ai_prompt_hash, ai_usage (JSON).\n\n8. **penggunaan_ruangan** - Room bookings. Columns: id, tanggal, jam_mulai, jam_selesai, ruangan, pengguna_ruangan, created_by, created_at.\n\n9. **pengumuman** - Announcements. Columns: id, tanggal, isi, created_by.\n\n10. **proposal** - Proposals AND LPJ (distinguished by jenis field). Columns: id, tanggal_upload, nama_kegiatan, jenis (Proposal/LPJ), pengaju, status, status_keuangan (Menunggu/Proses Keuangan/Dicairkan), keterangan, url_file, content_text, ai_analysis, ai_analysis_at, ai_prompt_hash, ai_usage, ketua, nim_ketua, nama_bank, no_rekening, jumlah_anggaran (decimal 15,2), tanggal_pelaksanaan, current_approver, parent_proposal_id (self-FK for LPJ), history (JSON).\n\n11. **proposal_revision_history** - Revision tracking. Columns: id, proposal_id, revision_cycle, version_no, event_type (REQUEST/UPLOAD), approver_username, approver_name, request_note, uploaded_by, uploaded_at, file_url.\n\n12. **alur** - Approval chains. Columns: id, pengaju (unique), acc1-acc6 (approver usernames).\n\n13. **proposal_reminder_log** - Reminder tracking. Columns: id, proposal_id, milestone, recipient_type, recipient_key, sent_at. Unique constraint on (proposal_id, milestone, recipient_type, recipient_key).\n\n14. **system_config** - Key-value config. Columns: id, config_key (unique), config_value. Keys: OPEN_SURAT, SYSTEM_NAME, SYSTEM_DESC, AI_BASE_URL, AI_API_KEY, AI_MODEL, PROPOSAL_PENDING_THRESHOLD_DAYS.\n\n**Design Patterns**: Soft FK only (app-level), denormalized names alongside usernames, JSON in TEXT columns (history fields), lazy schema migration via ALTER TABLE at runtime, idempotency keys on surat_keluar.",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-database",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 16,
+      "sync_id": "obs-e06f5ca157c1e999",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Project Architecture Overview",
+      "content": "**What**: LK UKMs is a native PHP application (no framework) for managing proposals, LPJ, surat, disposisi, pengumuman, users, and approval workflows for student organizations (UKM) at UNISBANK Semarang. Converted from Google Apps Script.\n\n**Why**: Core system for UKM administrative workflows at Universitas Stikubank.\n\n**Where**: Deployed at `/var/www/lk.pjdigital.top/`\n\n**Architecture**:\n- Entry point: `index.php` (router) with `.htaccess` rewrite rules\n- API layer: `api/*.php` (10 files) - JSON endpoints for AJAX calls\n- Page layer: `pages/*.php` (17 files) - server-rendered HTML views\n- Templates: `templates/header.php`, `sidebar.php`, `footer.php` + 3 mobile nav files\n- Includes: `includes/functions.php` (2615 lines), `security.php` (370 lines), `email.php` (320 lines), `env.php`\n- Config: `config/database.php` (DB connection + session), `config/schema.sql` (authoritative schema)\n- Public: `public/css/styles.css`, `public/js/proposal-page.js` (4412 lines), `public/icons/`\n- Scripts: `scripts/` - migrations, checks, seed scripts\n- Docs: `CLAUDE.md`, `panduanagen.md`, `arsitektur.md`, `analisis.md`, `AGENTS.md`\n- Wiki: `.ai-team/wiki/` (12 files), `.ai-team/rules/` (4 files)\n- AI agents: `.pi/agents/` (5 agent definitions), `.ai-team/` (6-role team)\n\n**Request Flow**:\nBrowser -\u003e Apache (.htaccess) -\u003e index.php (router) -\u003e api/*.php OR pages/*.php -\u003e templates (header/sidebar/footer) -\u003e includes (functions/security) -\u003e config/database.php -\u003e MySQL\n\n**Tech Stack**:\n- Backend: Native PHP 8.x, MySQL/MariaDB, mysqli with prepared statements\n- Frontend: Tailwind CDN (maroon theme #8B1538), Font Awesome 6.4, Chart.js, vanilla JS\n- Dependencies: TCPDF (PDF), endroid/qr-code (QR), PHPMailer (email), PhpSpreadsheet (Excel)\n- PWA: Service worker, manifest, offline page, mobile bottom navs per role\n- Timezone: Asia/Jakarta\n\n**Largest Files**: api/proposal.php (3470 lines), includes/functions.php (2615 lines), api/surat.php (2594 lines), pages/surat_masuk.php (2528 lines), public/js/proposal-page.js (4412 lines)",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-architecture",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 17,
+      "sync_id": "obs-8cf6adb2f29165f3",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "architecture",
+      "title": "LK UKMs - Business Modules \u0026 Workflows",
+      "content": "**What**: All business modules with their workflows, status transitions, and business rules.\n\n**Where**: api/proposal.php, api/surat.php, api/users.php, api/alur.php, api/pengumuman.php, api/arsip.php, api/penggunaan_ruangan.php, api/laporan.php. Corresponding pages in pages/*.php.\n\n**1. PROPOSAL \u0026 LPJ MODULE** (core module):\n- Shared `proposal` table, distinguished by `jenis` field (Proposal/LPJ)\n- Proposal Status: Menunggu {acc1} -\u003e Menunggu {acc2} -\u003e ... -\u003e Disetujui (or Ditolak/Revisi at any step)\n- Revision: Revisi -\u003e User uploads -\u003e Menunggu {same approver}\n- Financial Status: Menunggu -\u003e Proses Keuangan -\u003e Dicairkan (SA only)\n- LPJ Lifecycle: Parent proposal must be Disetujui + Dicairkan -\u003e LPJ created -\u003e Same approval chain -\u003e Approved -\u003e Marked Selesai\n- Wajib LPJ: Proposal with status_keuangan=Dicairkan and no linked LPJ\n- Undo: SA can undo last approval via _snapshot in history JSON. Blocked if financial status changed.\n- Approval chain: Up to 6 approvers per pengaju (acc1-acc6 in alur table)\n- normalizeApprover() for underscore/space matching\n- Auto-reminders: H-3, H-5, H-7 milestones\n- Role scoping: User=own, Approver=chain, Admin=chain+own, SA=all\n\n**2. SURAT (LETTER) MODULE**:\n- Surat Masuk: SA creates -\u003e Menunggu -\u003e Disetujui/Revisi/Ditolak (SA only)\n- Surat Keluar: User sends to SA -\u003e Creates paired surat_masuk for SA -\u003e SA reviews -\u003e Status syncs bidirectionally\n- Kategori system with dynamic extra_data (JSON)\n- DOCX-to-PDF conversion via ZipArchive+TCPDF\n- Idempotency key on surat_keluar\n\n**3. DISPOSISI (DISPOSITION) MODULE**:\n- SA creates dispositions from surat_masuk to any user\n- Statuses: Terkirim -\u003e Dibaca -\u003e Diproses -\u003e Selesai\n- Priority: Rendah/Sedang/Tinggi with optional deadline (tenggat)\n- Inbox/Sent box model\n- Email+WhatsApp notifications on creation\n\n**4. USER MANAGEMENT**:\n- CRUD by SA. Admin can reset passwords.\n- Default password: 123456 (force_change on first login)\n- Welcome email on creation if email provided\n- Login info via WhatsApp (sendLoginInfoWA)\n- User ID 1 (first SA) cannot be deleted\n\n**5. APPROVAL CHAIN (ALUR) MODULE**:\n- SA configures acc1-acc6 per pengaju\n- Health checks: getUKMWithoutAlur(), getUnresolvedApprovers()\n\n**6. PENGUMUMAN**: Simple CRUD. Admin/SA create, SA delete, all view.\n\n**7. ARSIP (ARCHIVE)**: Document archive with AI analysis. SA/Admin add/delete. Text extraction + AI analysis with caching.\n\n**8. PENGGUNAAN RUANGAN**: Room booking. SA/User view, SA add/update.\n\n**9. LAPORAN (REPORTS)**: 4 report types: Rekapitulasi Proposal, LPJ, Surat, Keuangan. Excel export via PhpSpreadsheet. Admin/SA only.\n\n**10. AI ANALYSIS**: External API (configurable). Applied to proposals and arsip. Features: text extraction from PDF/DOCX, caching via ai_prompt_hash, document locking, rate-limited continuations, DB append for chat history.\n\n**11. NOTIFICATIONS**: WhatsApp via wa.dwibudi.my.id API. Email via PHPMailer/Gmail SMTP. Events: submit, approve, reject, revise, remind, disposisi, financial change, undo.\n\n**12. PDF GENERATION**: TCPDF with QR codes. Proposal pengesahan (QR per approver), LPJ pengesahan, Surat pengesahan.\n\n**13. AUDIT LOGGING**: activity_logs (general), login_audit_logs (auth). Functions: recordLog(), recordLogSystem(), recordEventLog(), recordLoginAudit(). Request ID correlation.",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-modules",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    },
+    {
+      "id": 18,
+      "sync_id": "obs-1edf185eec4885c1",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "type": "discovery",
+      "title": "LK UKMs - Documentation \u0026 Wiki Structure",
+      "content": "**What**: Comprehensive documentation across 85+ markdown files organized in multiple layers.\n\n**Where**: Root .md files, .ai-team/wiki/ (12 files), .ai-team/rules/ (4 files), docs/ (9 files), .pi/agents/ (5 files), .ai-team/output/ (30+ files).\n\n**Core Docs**:\n- `CLAUDE.md` - Primary AI agent guidance. Architecture, routing, DB, security, commands.\n- `panduanagen.md` - Comprehensive Indonesian guide (most current). Project structure, routing, roles, DB schema, helpers, API endpoints, workflows.\n- `AGENTS.md` - Agent operating notes. References RTK.md, CLAUDE.md, panduanagen.md.\n- `arsitektur.md` - Architecture with Mermaid diagrams, routing map, role matrix, proposal lifecycle, security findings.\n- `analisis.md` - Codebase analysis (2026-06-15). All modules, integrations, security patterns, statistics.\n\n**Wiki Layer** (.ai-team/wiki/):\n- 00-overview.md, 01-architecture.md, 02-routing.md, 03-security.md\n- 04-database-schema.md, 05-api-map.md, 06-page-map.md\n- 07-proposal-lpj-workflow.md, 08-surat-workflow.md\n- 09-upload-pdf-notification-ai.md, 10-frontend-patterns.md\n- 99-known-issues.md\n\n**Rules** (.ai-team/rules/): agent-routing.md, qa-rules.md, security-rules.md, development-rules.md\n\n**Pi Agents** (.pi/agents/): lk-analyst, lk-developer, lk-qa, lk-designer, lk-docs (all gpt-5.5, thinking: medium)\n\n**Task Lists**: TASKLIST-KEAMANAN-KRITIS.md (P0-P3 all done), TASKLIST-DASHBOARD-IMPROVEMENT.md (4 phases done), TASKLIST-PROPOSAL-IMPROVEMENT.md (4/5 phases done), tasklist-perbaikan-proposal.md (4 phases)\n\n**Progress**: progres-pwa.md (User U1-U6 done, Approver done, SA not started), super-pwa.md (SA1-SA8 planned)\n\n**Integration Docs**: wa.md (WhatsApp), plan-slack.md (Slack-Pi integration)\n\n**docs/ Directory**: menu-role-matrix.md, disposisi-uiux-checklist.md/changelog.md, proposal-uiux-checklist.md, analisis-ai-perbaikan-checklist.md, pwa-requirements-validation.md, kipk-cleanup-task-list.md, pengembangan-checklist.md, task-list.md\n\n**Note**: Root README.md and CHANGELOG.md belong to Engram tool, not LK UKMs.\n\n**Notable**: panduanagen.md is more current than CLAUDE.md. KIPK module fully removed (2026-06-15). All security tasks (P0-P3) completed. AI model: Sumopod MiniMax-M2.7-highspeed.",
+      "project": "simapro",
+      "scope": "project",
+      "topic_key": "lk-ukms-docs",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 13:45:50",
+      "created_at": "2026-06-25 13:45:50",
+      "updated_at": "2026-06-25 13:45:50"
+    }
+  ],
+  "prompts": [
+    {
+      "id": 1,
+      "sync_id": "prompt-00f5485a2a62839a",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "content": "pelajari codebase ini, semua wiki, perilaku, termasuk arsitektur kemudian simpan ke engram",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:37:41"
+    },
+    {
+      "id": 2,
+      "sync_id": "prompt-a5a14aa2ac3813d2",
+      "session_id": "019eff00-d6a3-7205-bd7e-bd479f4eb29d",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application for proposal, LPJ, surat, pengumuman, users, and approval workflow management.\n\nYour task: Explore the COMPLETE project structure. List ALL directories, key files, and their purposes. \n\n1. First run `ls -la /var/www/lk.pjdigital.top/` to see root files\n2. Then explore each major directory (api/, pages/, templates/, config/, includes/, scripts/, etc.)\n3. Check for any .md files, wiki files, documentation\n4. Check composer.json for dependencies\n5. Check .htaccess and any configuration files\n6. Look for any CLAUDE.md, RTK.md, panduanagen.md, AGENTS.md files\n\nReport everything in detail - file paths, their purposes, and how they connect. This is a research-only task, do NOT modify any files.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": 3,
+      "sync_id": "prompt-428bf82b34d6864d",
+      "session_id": "019eff00-d6ae-7579-b138-939f63dcfb37",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application.\n\nYour task: Understand the DATABASE SCHEMA completely.\n\n1. Search for SQL schema files, migration files, or database setup files: `find /var/www/lk.pjdigital.top -name \"*.sql\" -o -name \"*migration*\" -o -name \"*schema*\" | head -50`\n2. Search for table creation patterns in PHP files: `grep -r \"CREATE TABLE\" /var/www/lk.pjdigital.top --include=\"*.php\" --include=\"*.sql\" | head -50`\n3. Look at config/database.php for connection details\n4. Search for all database table references: `grep -r \"FROM\\s\\+\\`\" /var/www/lk.pjdigital.top/api/ --include=\"*.php\" | head -100`\n5. Look for any database initialization or seed scripts\n6. Check for all table names used in queries across api/ and includes/ directories\n\nReport all tables found, their columns (inferred from queries), and relationships. This is research only, do NOT modify files.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": 4,
+      "sync_id": "prompt-3de68f2b2840eaae",
+      "session_id": "019eff00-d6ba-7c46-be7a-1ad551d0dbd9",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application with API endpoints.\n\nYour task: Map ALL API endpoints and routing logic.\n\n1. Read index.php to understand the main routing\n2. List all files in api/ directory: `ls -la /var/www/lk.pjdigital.top/api/`\n3. For each API file, grep for action handlers (e.g., $_GET['action'], $_POST['action'], switch cases on action)\n4. Check for authentication middleware, CSRF validation, role checks\n5. Look for the jsonResponse() helper and how it's used\n6. Check for any rate limiting, file upload endpoints, PDF generation endpoints\n7. Look for any webhook or external integration endpoints\n\nMap out every endpoint with its HTTP method, required parameters, required roles, and what it does. This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": 5,
+      "sync_id": "prompt-adf08fc62137be19",
+      "session_id": "019eff00-d6c2-73b4-a3a7-6876a7386e73",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application.\n\nYour task: Understand the AUTHENTICATION and AUTHORIZATION system completely.\n\n1. Find and read all auth-related files: `find /var/www/lk.pjdigital.top -name \"*auth*\" -o -name \"*login*\" -o -name \"*session*\" | grep -v node_modules | grep -v vendor`\n2. Search for session_start, $_SESSION usage patterns\n3. Find requireRole() function and how it's implemented\n4. Look for role definitions - what roles exist (Super Admin, Admin, etc.)\n5. Check how permissions are checked in pages/ and api/ files\n6. Look for password hashing, login flow, logout flow\n7. Check for any OAuth, JWT, or token-based auth\n8. Look for the normalizeApprover() function mentioned in AGENTS.md\n9. Check for CSRF token generation and validation\n\nReport the complete auth system: login flow, session management, role hierarchy, permission checks. Research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": 6,
+      "sync_id": "prompt-f483c7967dee7d76",
+      "session_id": "019eff02-7e85-7fa3-a994-672c7c257666",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application.\n\nYour task: Understand the FRONTEND/UI architecture completely.\n\n1. Read templates/header.php, templates/sidebar.php, templates/footer.php\n2. List all pages/ files and understand what each page does\n3. Check for JavaScript files, CSS files, or frontend build tools\n4. Look for the showToast() helper and how UI feedback works\n5. Check how Tailwind CDN is configured (colors, theme)\n6. Look for any AJAX/fetch patterns in the frontend code\n7. Check for any chart libraries, data tables, or UI component libraries\n8. Look for any modal/dialog patterns\n9. Check for responsive design patterns\n10. Look at how forms are built - CSRF tokens, validation, submission\n\nReport the complete frontend architecture: templating system, styling approach, JS patterns, component structure. Research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:40:14"
+    },
+    {
+      "id": 7,
+      "sync_id": "prompt-7a052c4f8c9b0f28",
+      "session_id": "019eff03-12ec-746c-9e48-5a315de4078f",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application for proposal, LPJ, surat, pengumuman, users, and approval workflow management.\n\nYour task: Understand ALL BUSINESS MODULES in detail.\n\n1. Read the proposal module: api/proposal.php, pages/proposal.php - understand Proposal and LPJ workflows, approval chains, status transitions\n2. Read the surat (letter) module: any surat-related files in api/ and pages/\n3. Read the pengumuman (announcement) module\n4. Read the user management module\n5. Look for any approval workflow engine - how approvals are chained, how status changes work\n6. Check for the lembar pengesahan (approval sheet) PDF generation\n7. Look for file upload handling, document management\n8. Check for notification systems (WhatsApp, email, etc.)\n9. Look for any reporting or statistics modules\n10. Check for any audit logging (recordLog, recordLogSystem)\n\nReport each module: its purpose, data flow, key tables, status workflows, and business rules. Research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:40:52"
+    },
+    {
+      "id": 8,
+      "sync_id": "prompt-9aa5fcf791a9342e",
+      "session_id": "019eff03-18f6-7457-bbb0-d071094f83ad",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top.\n\nYour task: Read ALL documentation files completely.\n\n1. Read /var/www/lk.pjdigital.top/CLAUDE.md completely\n2. Read /root/.codex/RTK.md completely  \n3. Read /var/www/lk.pjdigital.top/panduanagen.md completely\n4. Read /var/www/lk.pjdigital.top/AGENTS.md completely\n5. Look for any other .md files, README files, or documentation in the project\n6. Check for any wiki/ directory or docs/ directory\n7. Look for any CHANGELOG, CONTRIBUTING, or similar files\n\nReport ALL content from these documentation files verbatim or in detailed summary. This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:40:53"
+    },
+    {
+      "id": 9,
+      "sync_id": "prompt-8147a68b5398c3ac",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "content": "aku ingin nantinya banyak knowledge dari coding agentku diberbagai sumber jadi satu di github dengan pi dan engram juga, bisa? caranya?",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:47:08"
+    },
+    {
+      "id": 10,
+      "sync_id": "prompt-8f58cc61c63ba77a",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "content": "rencanakan untuk opsi 5",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:50:53"
+    },
+    {
+      "id": 11,
+      "sync_id": "prompt-70a3cdfd3ac9db1e",
+      "session_id": "019eff0c-a485-7cfd-bdb2-d36a237bea84",
+      "content": "You are exploring the Pi coding agent documentation to understand how Pi integrates with Engram and how to build custom extensions/skills.\n\nYour task:\n1. Read `/root/.nvm/versions/node/v22.22.0/lib/node_modules/@earendil-works/pi-coding-agent/README.md` completely\n2. Read all docs in `/root/.nvm/versions/node/v22.22.0/lib/node_modules/@earendil-works/pi-coding-agent/docs/` - especially:\n   - extensions.md\n   - sdk.md\n   - skills.md\n   - Any file related to memory, engram, or hooks\n3. Read examples in `/root/.nvm/versions/node/v22.22.0/lib/node_modules/@earendil-works/pi-coding-agent/examples/` - especially extensions/ and SDK examples\n4. Check if there are hook points for \"after session\", \"before compaction\", \"on save\" etc.\n5. Look for any GitHub integration or git-related features\n\nReport: What extension/hook points does Pi provide? How can we automate actions after a Pi session ends? How does Pi interact with Engram? What SDK capabilities exist for custom automation? This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:51:19"
+    },
+    {
+      "id": 12,
+      "sync_id": "prompt-1e65aa02739d5cf1",
+      "session_id": "019eff0c-a4a8-7236-9b06-7157086df509",
+      "content": "You are exploring the git setup and deployment configuration for the project at /var/www/lk.pjdigital.top.\n\nYour task:\n1. Check git status: `cd /var/www/lk.pjdigital.top \u0026\u0026 git status 2\u003e/dev/null || echo \"Not a git repo\"`\n2. Check git remotes: `git remote -v 2\u003e/dev/null`\n3. Check git log: `git log --oneline -20 2\u003e/dev/null`\n4. Check .gitignore: `cat .gitignore 2\u003e/dev/null`\n5. Check if there's a .github/ directory or CI/CD config\n6. Check for any existing deploy scripts or hooks: `ls .git/hooks/ 2\u003e/dev/null`\n7. Check if there's a separate knowledge/docs repo anywhere: `ls ~/lk-ukms-* 2\u003e/dev/null; ls ~/*/wiki 2\u003e/dev/null`\n8. Check GitHub CLI: `which gh 2\u003e/dev/null \u0026\u0026 gh auth status 2\u003e/dev/null`\n9. Check SSH keys: `ls ~/.ssh/ 2\u003e/dev/null`\n10. Check for any existing automation: crontab, systemd timers, etc.\n\nReport: What's the current git/deploy setup? Is GitHub CLI available? Are there SSH keys for push? What automation exists? This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:51:19"
+    },
+    {
+      "id": 13,
+      "sync_id": "prompt-5c9da801d29875db",
+      "session_id": "019eff0c-a49d-7151-843b-c86eeade8218",
+      "content": "You are exploring the Engram persistent memory tool to understand its sync, export, and integration capabilities.\n\nYour task:\n1. Run `engram --help` to see all commands\n2. Run `engram sync --help` to understand sync options\n3. Run `engram cloud --help` to understand cloud options\n4. Run `engram export --help` and `engram import --help`\n5. Check if there's a config file format: look for any .engram/ config files, or check `engram doctor`\n6. Run `engram sync --status` to see current sync state\n7. Look for any environment variables that control Engram behavior: `env | grep ENGRAM`\n8. Check if Engram has webhook or callback capabilities\n9. Look at the Engram binary location and any associated files: `ls -la $(which engram)`, `ls /usr/local/bin/engram*`\n10. Check if there's an Engram MCP server config: `cat ~/.config/engram/` or similar\n\nReport: What are ALL Engram sync mechanisms? How does git sync work exactly? What config options exist? How can we automate export-to-git? This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:51:19"
+    },
+    {
+      "id": 14,
+      "sync_id": "prompt-00f5485a2a62839a",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "content": "pelajari codebase ini, semua wiki, perilaku, termasuk arsitektur kemudian simpan ke engram",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:37:41"
+    },
+    {
+      "id": 15,
+      "sync_id": "prompt-a5a14aa2ac3813d2",
+      "session_id": "019eff00-d6a3-7205-bd7e-bd479f4eb29d",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application for proposal, LPJ, surat, pengumuman, users, and approval workflow management.\n\nYour task: Explore the COMPLETE project structure. List ALL directories, key files, and their purposes. \n\n1. First run `ls -la /var/www/lk.pjdigital.top/` to see root files\n2. Then explore each major directory (api/, pages/, templates/, config/, includes/, scripts/, etc.)\n3. Check for any .md files, wiki files, documentation\n4. Check composer.json for dependencies\n5. Check .htaccess and any configuration files\n6. Look for any CLAUDE.md, RTK.md, panduanagen.md, AGENTS.md files\n\nReport everything in detail - file paths, their purposes, and how they connect. This is a research-only task, do NOT modify any files.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": 16,
+      "sync_id": "prompt-428bf82b34d6864d",
+      "session_id": "019eff00-d6ae-7579-b138-939f63dcfb37",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application.\n\nYour task: Understand the DATABASE SCHEMA completely.\n\n1. Search for SQL schema files, migration files, or database setup files: `find /var/www/lk.pjdigital.top -name \"*.sql\" -o -name \"*migration*\" -o -name \"*schema*\" | head -50`\n2. Search for table creation patterns in PHP files: `grep -r \"CREATE TABLE\" /var/www/lk.pjdigital.top --include=\"*.php\" --include=\"*.sql\" | head -50`\n3. Look at config/database.php for connection details\n4. Search for all database table references: `grep -r \"FROM\\s\\+\\`\" /var/www/lk.pjdigital.top/api/ --include=\"*.php\" | head -100`\n5. Look for any database initialization or seed scripts\n6. Check for all table names used in queries across api/ and includes/ directories\n\nReport all tables found, their columns (inferred from queries), and relationships. This is research only, do NOT modify files.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": 17,
+      "sync_id": "prompt-3de68f2b2840eaae",
+      "session_id": "019eff00-d6ba-7c46-be7a-1ad551d0dbd9",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application with API endpoints.\n\nYour task: Map ALL API endpoints and routing logic.\n\n1. Read index.php to understand the main routing\n2. List all files in api/ directory: `ls -la /var/www/lk.pjdigital.top/api/`\n3. For each API file, grep for action handlers (e.g., $_GET['action'], $_POST['action'], switch cases on action)\n4. Check for authentication middleware, CSRF validation, role checks\n5. Look for the jsonResponse() helper and how it's used\n6. Check for any rate limiting, file upload endpoints, PDF generation endpoints\n7. Look for any webhook or external integration endpoints\n\nMap out every endpoint with its HTTP method, required parameters, required roles, and what it does. This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": 18,
+      "sync_id": "prompt-adf08fc62137be19",
+      "session_id": "019eff00-d6c2-73b4-a3a7-6876a7386e73",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application.\n\nYour task: Understand the AUTHENTICATION and AUTHORIZATION system completely.\n\n1. Find and read all auth-related files: `find /var/www/lk.pjdigital.top -name \"*auth*\" -o -name \"*login*\" -o -name \"*session*\" | grep -v node_modules | grep -v vendor`\n2. Search for session_start, $_SESSION usage patterns\n3. Find requireRole() function and how it's implemented\n4. Look for role definitions - what roles exist (Super Admin, Admin, etc.)\n5. Check how permissions are checked in pages/ and api/ files\n6. Look for password hashing, login flow, logout flow\n7. Check for any OAuth, JWT, or token-based auth\n8. Look for the normalizeApprover() function mentioned in AGENTS.md\n9. Check for CSRF token generation and validation\n\nReport the complete auth system: login flow, session management, role hierarchy, permission checks. Research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:38:25"
+    },
+    {
+      "id": 19,
+      "sync_id": "prompt-f483c7967dee7d76",
+      "session_id": "019eff02-7e85-7fa3-a994-672c7c257666",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application.\n\nYour task: Understand the FRONTEND/UI architecture completely.\n\n1. Read templates/header.php, templates/sidebar.php, templates/footer.php\n2. List all pages/ files and understand what each page does\n3. Check for JavaScript files, CSS files, or frontend build tools\n4. Look for the showToast() helper and how UI feedback works\n5. Check how Tailwind CDN is configured (colors, theme)\n6. Look for any AJAX/fetch patterns in the frontend code\n7. Check for any chart libraries, data tables, or UI component libraries\n8. Look for any modal/dialog patterns\n9. Check for responsive design patterns\n10. Look at how forms are built - CSRF tokens, validation, submission\n\nReport the complete frontend architecture: templating system, styling approach, JS patterns, component structure. Research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:40:14"
+    },
+    {
+      "id": 20,
+      "sync_id": "prompt-7a052c4f8c9b0f28",
+      "session_id": "019eff03-12ec-746c-9e48-5a315de4078f",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top. This is a native PHP application for proposal, LPJ, surat, pengumuman, users, and approval workflow management.\n\nYour task: Understand ALL BUSINESS MODULES in detail.\n\n1. Read the proposal module: api/proposal.php, pages/proposal.php - understand Proposal and LPJ workflows, approval chains, status transitions\n2. Read the surat (letter) module: any surat-related files in api/ and pages/\n3. Read the pengumuman (announcement) module\n4. Read the user management module\n5. Look for any approval workflow engine - how approvals are chained, how status changes work\n6. Check for the lembar pengesahan (approval sheet) PDF generation\n7. Look for file upload handling, document management\n8. Check for notification systems (WhatsApp, email, etc.)\n9. Look for any reporting or statistics modules\n10. Check for any audit logging (recordLog, recordLogSystem)\n\nReport each module: its purpose, data flow, key tables, status workflows, and business rules. Research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:40:52"
+    },
+    {
+      "id": 21,
+      "sync_id": "prompt-9aa5fcf791a9342e",
+      "session_id": "019eff03-18f6-7457-bbb0-d071094f83ad",
+      "content": "You are exploring the codebase at /var/www/lk.pjdigital.top.\n\nYour task: Read ALL documentation files completely.\n\n1. Read /var/www/lk.pjdigital.top/CLAUDE.md completely\n2. Read /root/.codex/RTK.md completely  \n3. Read /var/www/lk.pjdigital.top/panduanagen.md completely\n4. Read /var/www/lk.pjdigital.top/AGENTS.md completely\n5. Look for any other .md files, README files, or documentation in the project\n6. Check for any wiki/ directory or docs/ directory\n7. Look for any CHANGELOG, CONTRIBUTING, or similar files\n\nReport ALL content from these documentation files verbatim or in detailed summary. This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:40:53"
+    },
+    {
+      "id": 22,
+      "sync_id": "prompt-8147a68b5398c3ac",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "content": "aku ingin nantinya banyak knowledge dari coding agentku diberbagai sumber jadi satu di github dengan pi dan engram juga, bisa? caranya?",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:47:08"
+    },
+    {
+      "id": 23,
+      "sync_id": "prompt-8f58cc61c63ba77a",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "content": "rencanakan untuk opsi 5",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:50:53"
+    },
+    {
+      "id": 24,
+      "sync_id": "prompt-70a3cdfd3ac9db1e",
+      "session_id": "019eff0c-a485-7cfd-bdb2-d36a237bea84",
+      "content": "You are exploring the Pi coding agent documentation to understand how Pi integrates with Engram and how to build custom extensions/skills.\n\nYour task:\n1. Read `/root/.nvm/versions/node/v22.22.0/lib/node_modules/@earendil-works/pi-coding-agent/README.md` completely\n2. Read all docs in `/root/.nvm/versions/node/v22.22.0/lib/node_modules/@earendil-works/pi-coding-agent/docs/` - especially:\n   - extensions.md\n   - sdk.md\n   - skills.md\n   - Any file related to memory, engram, or hooks\n3. Read examples in `/root/.nvm/versions/node/v22.22.0/lib/node_modules/@earendil-works/pi-coding-agent/examples/` - especially extensions/ and SDK examples\n4. Check if there are hook points for \"after session\", \"before compaction\", \"on save\" etc.\n5. Look for any GitHub integration or git-related features\n\nReport: What extension/hook points does Pi provide? How can we automate actions after a Pi session ends? How does Pi interact with Engram? What SDK capabilities exist for custom automation? This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:51:19"
+    },
+    {
+      "id": 25,
+      "sync_id": "prompt-1e65aa02739d5cf1",
+      "session_id": "019eff0c-a4a8-7236-9b06-7157086df509",
+      "content": "You are exploring the git setup and deployment configuration for the project at /var/www/lk.pjdigital.top.\n\nYour task:\n1. Check git status: `cd /var/www/lk.pjdigital.top \u0026\u0026 git status 2\u003e/dev/null || echo \"Not a git repo\"`\n2. Check git remotes: `git remote -v 2\u003e/dev/null`\n3. Check git log: `git log --oneline -20 2\u003e/dev/null`\n4. Check .gitignore: `cat .gitignore 2\u003e/dev/null`\n5. Check if there's a .github/ directory or CI/CD config\n6. Check for any existing deploy scripts or hooks: `ls .git/hooks/ 2\u003e/dev/null`\n7. Check if there's a separate knowledge/docs repo anywhere: `ls ~/lk-ukms-* 2\u003e/dev/null; ls ~/*/wiki 2\u003e/dev/null`\n8. Check GitHub CLI: `which gh 2\u003e/dev/null \u0026\u0026 gh auth status 2\u003e/dev/null`\n9. Check SSH keys: `ls ~/.ssh/ 2\u003e/dev/null`\n10. Check for any existing automation: crontab, systemd timers, etc.\n\nReport: What's the current git/deploy setup? Is GitHub CLI available? Are there SSH keys for push? What automation exists? This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:51:19"
+    },
+    {
+      "id": 26,
+      "sync_id": "prompt-5c9da801d29875db",
+      "session_id": "019eff0c-a49d-7151-843b-c86eeade8218",
+      "content": "You are exploring the Engram persistent memory tool to understand its sync, export, and integration capabilities.\n\nYour task:\n1. Run `engram --help` to see all commands\n2. Run `engram sync --help` to understand sync options\n3. Run `engram cloud --help` to understand cloud options\n4. Run `engram export --help` and `engram import --help`\n5. Check if there's a config file format: look for any .engram/ config files, or check `engram doctor`\n6. Run `engram sync --status` to see current sync state\n7. Look for any environment variables that control Engram behavior: `env | grep ENGRAM`\n8. Check if Engram has webhook or callback capabilities\n9. Look at the Engram binary location and any associated files: `ls -la $(which engram)`, `ls /usr/local/bin/engram*`\n10. Check if there's an Engram MCP server config: `cat ~/.config/engram/` or similar\n\nReport: What are ALL Engram sync mechanisms? How does git sync work exactly? What config options exist? How can we automate export-to-git? This is research only.",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:51:19"
+    },
+    {
+      "id": 27,
+      "sync_id": "prompt-7d072fa39ee14b9f",
+      "session_id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
+      "content": "https://github.com/iggbudi/lk-ukms-knowledge.git ini reponya",
+      "project": "simapro",
+      "created_at": "2026-06-25 13:58:09"
+    }
+  ]
+}
