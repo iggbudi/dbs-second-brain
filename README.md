@@ -172,28 +172,29 @@ pi
 ### Alur Knowledge
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   Server A      │     │   Server B      │     │   Server C      │
-│   (pjdigital)   │     │   (server lain) │     │   (server lain) │
-└────────┬────────┘     └────────┬────────┘     └────────┬────────┘
-         │                       │                       │
-         │      push             │      push             │      push
-         └───────────────────────┼───────────────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │   GitHub                │
-                    │   lk-ukms-knowledge     │
-                    │   (Central Hub)         │
-                    └─────────────────────────┘
-                                 │
-                                 │      pull + import
-                                 ▼
-                    ┌─────────────────────────┐
-                    │   Pi di mana saja       │
-                    │   bisa akses semua      │
-                    │   knowledge!            │
-                    └─────────────────────────┘
+┌─────────────────┐     ┌─────────────────────────┐     ┌─────────────────┐
+│   Server A      │     │   Server B              │     │   Server C      │
+│   pjdigital.top │     │   aidis.my.id           │     │   (server lain) │
+│   (LK UKMs)     │     │   (17 projects)         │     │                 │
+└────────┬────────┘     └───────────┬─────────────┘     └────────┬────────┘
+         │                          │                            │
+         │      push                │      push                  │      push
+         └──────────────────────────┼────────────────────────────┘
+                                    │
+                                    ▼
+                    ┌───────────────────────────────┐
+                    │   GitHub                      │
+                    │   dbs-second-brain            │
+                    │   (Central Second Brain)      │
+                    └───────────────────────────────┘
+                                    │
+                                    │      pull + import
+                                    ▼
+                    ┌───────────────────────────────┐
+                    │   Pi di mana saja             │
+                    │   bisa akses semua            │
+                    │   knowledge!                  │
+                    └───────────────────────────────┘
 ```
 
 ### Apa yang Terjadi Saat Pi Session Berakhir?
@@ -223,11 +224,22 @@ Setelah setup, kamu bisa akses knowledge berikut:
 
 ### Inventory Project
 
-| Server | Jumlah Project | Domain |
-|--------|----------------|--------|
-| Server A (pjdigital) | 8 project | lk.pjdigital.top, bot.pjdigital.top, wa.dwibudi.my.id, dwibudi.my.id, dpmp2.dwibudi.my.id, lelangu.my.id, nanariset.my.id, eclipsetrack.my.id |
-| Server B | [TBD] | [TBD] |
+| Server | Jumlah Project | Domain Utama |
+|--------|----------------|-------------|
+| Server A (pjdigital.top) | 8 project | lk.pjdigital.top, bot.pjdigital.top, wa.dwibudi.my.id, dwibudi.my.id, dpmp2.dwibudi.my.id, lelangu.my.id, nanariset.my.id, eclipsetrack.my.id |
+| **Server B (aidis.my.id)** | **17 project** | aidis.my.id, al-barokah.my.id, bot.shm.my.id, brainboard.socai.my.id, cmaestro.my.id, eduguide.socai.my.id, inv.nanariset.my.id, kl.socai.my.id, quizify.socai.my.id, safesphere.my.id, simpelu.my.id, sjmlelang.com, socai.my.id, studdybuddy.socai.my.id, vibeplan.socai.my.id |
 | Server C | [TBD] | [TBD] |
+
+### Detail Server B (aidis.my.id)
+
+| Stack | Jumlah | Projects |
+|-------|--------|----------|
+| PHP Native | 5 | aidis.my.id, al-barokah.my.id, kl.socai.my.id, sjmlelang.com, simpelu.my.id |
+| Laravel | 5 | brainboard.socai.my.id, quizify.socai.my.id, studdybuddy.socai.my.id, vibeplan.socai.my.id, eduguide.socai.my.id |
+| Node.js | 5 | bot.shm.my.id, cmaestro.my.id, safesphere.my.id, socai.my.id, inv.nanariset.my.id |
+| Static | 2 | botjb.nanariset.my.id, fetal.pjdigital.top |
+
+> Detail lengkap: `wiki/server-aidis-my-id-full-inventory.md`
 
 ### Preferensi User
 
@@ -363,10 +375,10 @@ tail -f /var/log/knowledge-sync.log
 
 | Metrik | Jumlah |
 |--------|--------|
-| **Servers** | 1 (pjdigital.top) |
-| **Projects** | 8 |
-| **Engram Observations** | 28+ |
-| **Sessions** | 11+ |
+| **Servers** | 2 (pjdigital.top + aidis.my.id) |
+| **Projects** | 25 (8 + 17) |
+| **Engram Observations** | 30+ |
+| **Sessions** | 12+ |
 | **Last Sync** | 2026-06-25 |
 
 ---
@@ -376,7 +388,8 @@ tail -f /var/log/knowledge-sync.log
 | Resource | URL |
 |----------|-----|
 | **GitHub Repo** | https://github.com/iggbudi/dbs-second-brain |
-| **Server A Projects** | https://lk.pjdigital.top |
+| **Server A (pjdigital.top)** | https://lk.pjdigital.top |
+| **Server B (aidis.my.id)** | https://aidis.my.id |
 | **Engram Docs** | (akan ditambah) |
 | **Pi Docs** | (akan ditambah) |
 
@@ -449,5 +462,5 @@ Jika ada masalah dengan setup atau knowledge hub:
 ---
 
 *Last updated: 2026-06-25*
-*Knowledge Hub Version: 1.0*
-*Total Servers: 1 | Total Projects: 8*
+*Knowledge Hub Version: 2.0*
+*Total Servers: 2 | Total Projects: 25*
