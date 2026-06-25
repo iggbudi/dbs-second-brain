@@ -64,10 +64,33 @@ Aplikasi web untuk manajemen disposisi surat masuk di Universitas Stikubank (UNI
 
 ## 🔧 Server Inventory
 
-| Server | Domain | Projects | Stack |
-|--------|--------|----------|-------|
-| Server A | pjdigital.top | LK UKMs | PHP + MySQL |
-| Server B | aidis.my.id | Disposisi Surat UNISBANK | PHP + PostgreSQL |
+| Server | Domain | Total Projects | Main Stack |
+|--------|--------|----------------|------------|
+| Server A | pjdigital.top | 1+ (LK UKMs) | PHP + MySQL |
+| Server B | aidis.my.id | 17 | PHP, Node.js, Laravel, PostgreSQL, MySQL, MongoDB |
+
+### Server B (aidis.my.id) - 17 Projects
+| # | Domain | Stack | Type |
+|---|--------|-------|------|
+| 1 | aidis.my.id | PHP + PostgreSQL | Disposisi Surat UNISBANK |
+| 2 | al-barokah.my.id | PHP + DOMPDF | Masjid Landing Page |
+| 3 | botjb.nanariset.my.id | Static | Placeholder |
+| 4 | bot.shm.my.id | Node.js + Telegraf | Telegram Bot (SIMPEL-U) |
+| 5 | brainboard.socai.my.id | Laravel | Web Application |
+| 6 | cmaestro.my.id | Node.js + Pi SDK | AI Chatbot (Bengkel) |
+| 7 | eduguide.socai.my.id | Next.js + Laravel | AI Academic Assistant |
+| 8 | fetal.pjdigital.top | Unknown | Unknown |
+| 9 | inv.nanariset.my.id | Node.js | Invoice System |
+| 10 | kl.socai.my.id | PHP + MySQL | Kausar Leather |
+| 11 | quizify.socai.my.id | Laravel | Quiz Application |
+| 12 | safesphere.my.id | Node.js + SQLite | Anti-Bullying Reporting |
+| 13 | simpelu.my.id | PHP + MySQL | Campus Management |
+| 14 | sjmlelang.com | PHP | Online Auction |
+| 15 | socai.my.id | Node.js + PostgreSQL | Main Platform + Bot |
+| 16 | studdybuddy.socai.my.id | Laravel + MongoDB | AI Study Assistant |
+| 17 | vibeplan.socai.my.id | Laravel + Next.js | AI Planning Assistant |
+
+> Full details: `server-aidis-my-id-full-inventory.md`
 
 ---
 
