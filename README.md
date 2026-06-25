@@ -67,8 +67,8 @@ engram --version
 
 ```bash
 cd ~
-git clone https://github.com/iggbudi/lk-ukms-knowledge.git
-cd lk-ukms-knowledge
+git clone https://github.com/iggbudi/dbs-second-brain.git
+cd dbs-second-brain
 ```
 
 ### Step 3: Setup Engram untuk Project
@@ -375,7 +375,7 @@ tail -f /var/log/knowledge-sync.log
 
 | Resource | URL |
 |----------|-----|
-| **GitHub Repo** | https://github.com/iggbudi/lk-ukms-knowledge |
+| **GitHub Repo** | https://github.com/iggbudi/dbs-second-brain |
 | **Server A Projects** | https://lk.pjdigital.top |
 | **Engram Docs** | (akan ditambah) |
 | **Pi Docs** | (akan ditambah) |
