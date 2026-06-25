@@ -40,6 +40,14 @@
       "sessions": 7,
       "memories": 6,
       "prompts": 24
+    },
+    {
+      "id": "cb69f1a5",
+      "created_by": "root",
+      "created_at": "2026-06-25T14:48:33Z",
+      "sessions": 0,
+      "memories": 2,
+      "prompts": 4
     }
   ]
 }
