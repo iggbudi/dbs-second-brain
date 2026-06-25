@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "exported_at": "2026-06-25 14:48:33",
+  "exported_at": "2026-06-25 15:28:23",
   "sessions": [
     {
       "id": "019efeff-88d2-7e06-a802-ff70d3f0b37d",
@@ -555,6 +555,56 @@
       "last_seen_at": "2026-06-25 14:46:07",
       "created_at": "2026-06-25 14:46:07",
       "updated_at": "2026-06-25 14:46:07"
+    },
+    {
+      "id": 28,
+      "sync_id": "obs-61a631c223f0c569",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "type": "decision",
+      "title": "Perlu README.md di repo lk-ukms-knowledge",
+      "content": "**What**: Perlu buat README.md di repo GitHub lk-ukms-knowledge yang berisi instruksi setup awal\n\n**Why**: Pi di server lain belum tahu nama repo atau apa yang harus dilakukan setelah clone\n\n**Where**: https://github.com/iggbudi/lk-ukms-knowledge\n\n**README.md harus berisi**:\n1. Apa itu repo ini (Central Knowledge Hub)\n2. Cara setup di server baru (7 langkah)\n3. Cara akses knowledge (engram search)\n4. Daftar server yang sudah terhubung\n5. Link ke dokumentasi lengkap\n\n**Next Steps**:\n- User perlu kasih tahu Pi di server lain nama repo: `https://github.com/iggbudi/lk-ukms-knowledge.git`\n- Buat README.md di repo tersebut\n- Pi di server lain: clone → baca README → ikuti instruksi",
+      "project": "lk-ukms",
+      "scope": "project",
+      "topic_key": "github-readme-needed",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 14:50:49",
+      "review_after": "2026-12-25 14:50:49",
+      "created_at": "2026-06-25 14:50:49",
+      "updated_at": "2026-06-25 14:50:49"
+    },
+    {
+      "id": 29,
+      "sync_id": "obs-f843527b5b2f0c73",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "type": "preference",
+      "title": "Preferensi user: nama DBS, repo Otak Kedua DBS",
+      "content": "**What**: User minta dipanggil \"DBS\" dan repo knowledge hub renamed menjadi \"Otak Kedua DBS\"\n\n**Why**: \n- DBS adalah nama user\n- Nama repo lebih personal dan mudah diingat\n- Agent Pi di mana saja harus tahu cara memanggil user\n\n**Where**:\n- GitHub repo: https://github.com/iggbudi/dbs-second-brain ✅ (sudah di-rename)\n- Referensi: User adalah DBS\n\n**Rules untuk Pi**:\n1. **Selalu panggil user dengan nama \"DBS\"**\n2. Saat awal session, tanya: \"Halo DBS, ada yang bisa saya bantu?\"\n3. Jangan gunakan nama lain selain DBS\n4. Repo knowledge hub = \"Otak Kedua DBS\" (https://github.com/iggbudi/dbs-second-brain)\n\n**Learned**:\n- User punya identitas: DBS\n- User suka personalisasi (nama repo yang bermakna)\n- User ingin Pi di mana saja konsisten memanggilnya DBS",
+      "project": "lk-ukms",
+      "scope": "personal",
+      "topic_key": "user-identity-dbs",
+      "revision_count": 2,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 14:53:55",
+      "review_after": "2026-09-25 14:53:55",
+      "created_at": "2026-06-25 14:53:55",
+      "updated_at": "2026-06-25 14:57:03"
+    },
+    {
+      "id": 30,
+      "sync_id": "obs-11287a650d34c0ae",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "type": "architecture",
+      "title": "Pipeline Engram - Cara kerja Knowledge Hub",
+      "content": "**What**: Penjelasan lengkap tentang pipeline Engram untuk Knowledge Hub \"Otak Kedua DBS\"\n\n**Why**: Agar Pi di server manapun tahu cara kerja sistem knowledge dan bagaimana mereka terhubung\n\n---\n\n## PIPELINE ENGRAM - KNOWLEDGE HUB\n\n### Apa itu Engram?\n\nEngram adalah **persistent memory system** untuk Pi (AI Coding Agent). Engram memungkinkan Pi untuk:\n- Menyimpan knowledge lintas session\n- Mengakses knowledge dari session sebelumnya\n- Berbagi knowledge dengan Pi di server lain\n\n### Arsitektur Pipeline\n\n```\n┌─────────────────────────────────────────────────────────────────┐\n│                        SERVER A (pjdigital.top)                  │\n│                                                                 │\n│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    │\n│  │  Pi     │───▶│ Engram  │───▶│ Chunks  │───▶│ GitHub  │    │\n│  │ Session │    │ (SQLite)│    │ (.gz)   │    │ Push    │    │\n│  └─────────┘    └─────────┘    └─────────┘    └────┬────┘    │\n│                                                     │         │\n└─────────────────────────────────────────────────────┼─────────┘\n                                                      │\n                                                      ▼\n                                        ┌─────────────────────┐\n                                        │  dbs-second-brain   │\n                                        │  (Otak Kedua DBS)   │\n                                        │  GitHub Repo        │\n                                        └──────────┬──────────┘\n                                                   │\n                      ┌────────────────────────────┼────────────────────────────┐\n                      │                            │                            │\n                      ▼                            ▼                            ▼\n        ┌─────────────────────┐      ┌─────────────────────┐      ┌─────────────────────┐\n        │     SERVER B        │      │     SERVER C        │      │     SERVER D        │\n        │                     │      │                     │      │                     │\n        │  ┌─────┐ ┌───────┐ │      │  ┌─────┐ ┌───────┐ │      │  ┌─────┐ ┌───────┐ │\n        │  │ Git │▶│ Engram│ │      │  │ Git │▶│ Engram│ │      │  │ Git │▶│ Engram│ │\n        │  │Pull │ │Import │ │      │  │Pull │ │Import │ │      │  │Pull │ │Import │ │\n        │  └─────┘ └───────┘ │      │  └─────┘ └───────┘ │      │  └─────┘ └───────┘ │\n        │                     │      │                     │      │                     │\n        │  Pi bisa akses      │      │  Pi bisa akses      │      │  Pi bisa akses      │\n        │  semua knowledge!   │      │  semua knowledge!   │      │  semua knowledge!   │\n        └─────────────────────┘      └─────────────────────┘      └─────────────────────┘\n```\n\n---\n\n## KOMPONEN-KOMPONEN\n\n### 1. Engram (Persistent Memory)\n\n**Lokasi**: `/var/www/your-project/.engram/`\n\n**Struktur**:\n```\n.engram/\n├── config.json      ← Konfigurasi project\n├── manifest.json    ← Index semua chunks\n└── chunks/          ← Knowledge chunks\n    ├── chunk1.jsonl.gz\n    ├── chunk2.jsonl.gz\n    └── ...\n```\n\n**Tipe Knowledge yang Disimpan**:\n| Type | Contoh |\n|------|--------|\n| `discovery` | \"Project X pakai PHP + MySQL\" |\n| `preference` | \"User suka dokumentasi terstruktur\" |\n| `decision` | \"Breakpoint CSS diubah dari 1023px ke 767px\" |\n| `bugfix` | \"Cache version diupdate karena CSS lama di-cache\" |\n| `config` | \"Instruksi setup knowledge hub\" |\n| `architecture` | \"Konsep central knowledge hub\" |\n\n### 2. Pi Extension (Auto-Sync)\n\n**Lokasi**: `~/.pi/extensions/knowledge-sync.ts`\n\n**Fungsi**: Otomatis sync knowledge ke GitHub saat Pi session berakhir\n\n**Trigger**:\n- Session berakhir (Ctrl+C, /quit, /new, /resume, /fork)\n- Manual: `/sync-knowledge` command\n\n**Yang Dilakukan**:\n1. `engram sync --all` → Export semua knowledge ke chunks\n2. Copy chunks ke `~/dbs-second-brain/memories/`\n3. `git add .` → Stage perubahan\n4. `git commit -m \"auto-sync: Pi session {reason} ({timestamp})\"`\n5. `git push` → Push ke GitHub\n\n### 3. Cron Job (Backup Sync)\n\n**Jadwal**: Setiap 6 jam (`0 */6 * * *`)\n\n**Script**: `~/dbs-second-brain/scripts/sync-knowledge.sh`\n\n**Fungsi**: Backup jika extension tidak jalan atau session crash\n\n### 4. GitHub (Central Hub)\n\n**Repo**: https://github.com/iggbudi/dbs-second-brain\n\n**Struktur**:\n```\ndbs-second-brain/\n├── README.md           ← Panduan setup untuk Pi baru\n├── memories/\n│   └── .engram/\n│       └── chunks/     ← Semua knowledge chunks\n├── docs/               ← Dokumentasi project\n├── wiki/               ← Knowledge wiki\n├── agents/             ← Custom agent definitions\n├── rules/              ← Development rules\n└── scripts/            ← Sync \u0026 utility scripts\n```\n\n---\n\n## ALUR KERJA LENGKAP\n\n### Saat Pi Session Berakhir\n\n```\n1. User ketik /quit atau Ctrl+C\n         │\n         ▼\n2. Extension detect session_shutdown\n         │\n         ▼\n3. Extension jalankan: engram sync --all\n         │\n         ▼\n4. Knowledge di-export ke chunks (.jsonl.gz)\n         │\n         ▼\n5. Chunks di-copy ke ~/dbs-second-brain/memories/\n         │\n         ▼\n6. git add .\n         │\n         ▼\n7. git commit -m \"auto-sync: Pi session quit (2026-06-25T15:30:00Z)\"\n         │\n         ▼\n8. git push origin main\n         │\n         ▼\n9. Notification: \"Knowledge synced to GitHub (5 files changed)\"\n```\n\n### Saat Pi di Server Lain Ingin Akses Knowledge\n\n```\n1. Pi baru di server lain\n         │\n         ▼\n2. Clone repo: git clone https://github.com/iggbudi/dbs-second-brain.git\n         │\n         ▼\n3. Copy chunks ke project: cp -r dbs-second-brain/memories/.engram/chunks/* /var/www/project/.engram/chunks/\n         │\n         ▼\n4. Import ke Engram: engram sync --import\n         │\n         ▼\n5. Search knowledge: engram search \"inventory project\"\n         │\n         ▼\n6. Pi tahu tentang 8 project di server A!\n```\n\n---\n\n## CONTOH PENGGUNAAN\n\n### Simpan Knowledge Baru\n\n```python\n# Pi akan otomatis memanggil:\nmem_save(\n    title=\"Project baru ditemukan\",\n    content=\"Di server B ada project X yang pakai Laravel + MySQL\",\n    type=\"discovery\"\n)\n```\n\n### Akses Knowledge yang Ada\n\n```python\n# Pi search knowledge:\nmem_search(\"project mana yang pakai PHP?\")\n# → Hasil: 4 project di server A, 1 di server B\n\nmem_search(\"preferensi user\")\n# → Hasil: Suka dokumentasi terstruktur, desain style claw\n```\n\n### Update Knowledge yang Ada\n\n```python\n# Pi update knowledge:\nmem_update(\n    id=23,\n    content=\"Inventory project: 9 project di 2 server (tambah 1 project baru)\"\n)\n```\n\n---\n\n## KNOWLEDGE YANG TERSEDIA\n\nSetelah setup, Pi bisa akses:\n\n### Inventory Project (8 di Server A)\n\n| Domain | Nama | Stack |\n|--------|------|-------|\n| lk.pjdigital.top | LK UKMs | PHP + MySQL |\n| bot.pjdigital.top | Slack Bot | Node.js + SQLite |\n| wa.dwibudi.my.id | WhatsApp Gateway | Node.js + MariaDB |\n| dwibudi.my.id | Ruang Belajar LMS | PHP + MySQL |\n| dpmp2.dwibudi.my.id | SIMPMU | PHP + MySQL |\n| lelangu.my.id | Crypto Chart | HTML/JS |\n| nanariset.my.id | Nana Research + X Creator | PHP + Next.js |\n| eclipsetrack.my.id | Panduan Jurnal | PHP + Supabase |\n\n### Preferensi User (DBS)\n\n| Preferensi | Detail |\n|------------|--------|\n| **Nama** | DBS (panggil dengan nama ini!) |\n| **Dokumentasi** | Suka terstruktur (README, CHANGELOG, arsitektur.md) |\n| **Desain** | Style claw (maroon, gradient, rounded) |\n| **Bahasa** | Indonesia untuk user-facing docs |\n| **Coding** | PHP native, Tailwind CSS, prepared statements |\n\n### Decision History\n\n| Keputusan | Alasan |\n|-----------|--------|\n| Breakpoint 1023px → 767px | Menu mobile muncul di PC |\n| Cache v13 → v14 | CSS lama di-cache |\n| Buat dokumentasi terstruktur | Suka pola bot.pjdigital.top |\n| Rename repo ke dbs-second-brain | Personalisasi |\n\n---\n\n## TROUBLESHOOTING\n\n### Engram tidak ditemukan\n```bash\nnpm install -g @earendil-works/engram\n```\n\n### Knowledge tidak muncul setelah import\n```bash\nls -la /var/www/project/.engram/chunks/\nengram search \"test\"\n```\n\n### Push conflict\n```bash\ncd ~/dbs-second-brain\ngit pull --rebase\ngit push\n```\n\n### Extension tidak jalan\n```bash\nls -la ~/.pi/extensions/\n~/dbs-second-brain/scripts/sync-knowledge.sh\n```\n\n---\n\n## CHECKLIST SETUP\n\n- [ ] Engram terinstall\n- [ ] Repo cloned\n- [ ] Engram config dibuat\n- [ ] Knowledge di-import\n- [ ] Pi extension di-setup\n- [ ] Cron job di-setup (opsional)\n- [ ] Test search knowledge\n- [ ] Pi bisa mulai bekerja\n\n---\n\n## LINK PENTING\n\n| Resource | URL |\n|----------|-----|\n| **GitHub Repo** | https://github.com/iggbudi/dbs-second-brain |\n| **Server A** | pjdigital.top (8 project) |\n| **User** | DBS |\n\n---\n\n*Instruksi ini tersimpan di Engram dan akan auto-sync ke GitHub \"Otak Kedua DBS\"*\n*Pi di server lain bisa akses dengan: `engram search \"pipeline engram\"`*",
+      "project": "lk-ukms",
+      "scope": "project",
+      "topic_key": "engram-pipeline-explanation",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-06-25 15:27:38",
+      "created_at": "2026-06-25 15:27:38",
+      "updated_at": "2026-06-25 15:27:38"
     }
   ],
   "prompts": [
@@ -1029,6 +1079,62 @@
       "content": "update instruksi itu ke engram, biar pi server lain baca",
       "project": "lk-ukms",
       "created_at": "2026-06-25 14:47:44"
+    },
+    {
+      "id": 60,
+      "sync_id": "prompt-13275d053ef52542",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "content": "nama instruksinya di github engram apa?",
+      "project": "lk-ukms",
+      "created_at": "2026-06-25 14:49:37"
+    },
+    {
+      "id": 61,
+      "sync_id": "prompt-0527febd459b019d",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "content": "lha pi server lain belum tahu nama githubnya hehe",
+      "project": "lk-ukms",
+      "created_at": "2026-06-25 14:50:35"
+    },
+    {
+      "id": 62,
+      "sync_id": "prompt-a4227896dfdf814b",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "content": "ya dong, dengan baca readme, pi dimanapun langsung tahu, oh harus install engram, oh mau bikin secondbrain oh ini langkah-langkah yang harus dilakukan oleh pi gitu",
+      "project": "lk-ukms",
+      "created_at": "2026-06-25 14:51:46"
+    },
+    {
+      "id": 63,
+      "sync_id": "prompt-c2ffca9ab3b4e96a",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "content": "sekarang nama reponya adalah Otak kedua DBS (DBS itu namaku), jadi agent pi manapun nanti langsung tahu, harus manggil aku DBS",
+      "project": "lk-ukms",
+      "created_at": "2026-06-25 14:53:42"
+    },
+    {
+      "id": 64,
+      "sync_id": "prompt-046d8704f444bd53",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "content": "emang bisa rename repo?",
+      "project": "lk-ukms",
+      "created_at": "2026-06-25 14:55:19"
+    },
+    {
+      "id": 65,
+      "sync_id": "prompt-80e33681a7db5701",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "content": "https://github.com/iggbudi/dbs-second-brain sudah aku ubah",
+      "project": "lk-ukms",
+      "created_at": "2026-06-25 14:56:35"
+    },
+    {
+      "id": 66,
+      "sync_id": "prompt-5a9400e6bd78c28b",
+      "session_id": "019eff19-63e1-7755-ba88-91b719e86e14",
+      "content": "kamu ceritakan yang pipeline engram disini tadi, biar pi yang lain tahu",
+      "project": "lk-ukms",
+      "created_at": "2026-06-25 15:26:52"
     }
   ]
 }
