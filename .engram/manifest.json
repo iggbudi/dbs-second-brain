@@ -56,6 +56,14 @@
       "sessions": 0,
       "memories": 3,
       "prompts": 7
+    },
+    {
+      "id": "0fe3a4e8",
+      "created_by": "root",
+      "created_at": "2026-06-25T15:30:52Z",
+      "sessions": 1,
+      "memories": 0,
+      "prompts": 1
     }
   ]
 }
