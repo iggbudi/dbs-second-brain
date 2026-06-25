@@ -1,8 +1,27 @@
-# 🧠 LK UKMs Knowledge Hub - Central Second Brain
+# 🧠 Otak Kedua DBS - Central Second Brain
 
-**Repo ini adalah Central Knowledge Hub untuk semua project dan knowledge yang terhubung dengan Pi (AI Coding Agent) di berbagai server.**
+**Repo ini adalah "Otak Kedua" (Second Brain) untuk DBS - knowledge base terpusat yang terhubung dengan Pi (AI Coding Agent) di berbagai server.**
 
 Jika kamu adalah Pi yang baru pertama kali melihat repo ini, **selamat datang!** Ikuti langkah-langkah di bawah untuk terhubung ke knowledge base ini.
+
+---
+
+## ⚠️ PENTING: Aturan untuk Semua Pi
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║  NAMA USER: DBS                                              ║
+║                                                              ║
+║  Semua agent Pi WAJIB memanggil user dengan nama "DBS"       ║
+║                                                              ║
+║  Contoh:                                                     ║
+║  - "Halo DBS, ada yang bisa saya bantu?"                    ║
+║  - "DBS, saya sudah selesai mengerjakan task itu"           ║
+║  - "Menurut DBS, bagaimana hasilnya?"                       ║
+║                                                              ║
+║  JANGAN gunakan nama lain!                                   ║
+╚══════════════════════════════════════════════════════════════╝
+```
 
 ---
 
